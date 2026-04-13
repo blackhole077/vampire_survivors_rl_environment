@@ -11,13 +11,17 @@ from Xlib.display import Display
 
 from vampire_survivors_env.constants import (
     _ACTION_KEYS,
-    _LEVELUP_BRIGHTNESS_THRESHOLD,
+    _LEVELUP_CENTER_MEAN_THRESHOLD,
     _LEVELUP_COL_SLICE,
     _LEVELUP_CONSEC_FRAMES,
     _LEVELUP_ROW_SLICE,
+    _MENU_EDGE_THRESHOLD,
+    _RED_RATIO_THRESHOLD,
+    _RESULTS_PANEL_THRESHOLD,
 )
 from vampire_survivors_env.utils.window_utils import (
     GameWindow,
+    capture_game_window,
     find_game_window,
     focus_window,
     generate_keycodes,
@@ -67,6 +71,7 @@ class VampireSurvivorsEnv(gym.Env):
 
         self._sct = mss.mss()
         self._dark_frame_count: int = 0
+        self._gameplay_started: bool = False
         self._latest_frame: Optional[np.ndarray] = None
 
         # Circular buffer of preprocessed (H, W) float32 frames.
@@ -104,6 +109,8 @@ class VampireSurvivorsEnv(gym.Env):
         first playable frame, and clears accumulated frame stack buffers.
         """
         # self._navigate_to_quick_start()
+        self._dark_frame_count = 0
+        self._gameplay_started = False
         focus_window(self._display, self._window.xid)
         obs = self._get_obs()
         info = {}
@@ -124,7 +131,7 @@ class VampireSurvivorsEnv(gym.Env):
         reward = 0.0
         terminated = False
         truncated = False
-        info = {}
+        info = self._get_info()
         return obs, reward, terminated, truncated, info
 
     def render(self) -> Optional[np.ndarray]:
@@ -149,15 +156,7 @@ class VampireSurvivorsEnv(gym.Env):
     def _capture_screen(self) -> np.ndarray:
         """Grab and return the current game-window pixels as an HxWx3 uint8 RGB array."""
         assert self._window is not None
-        region = {
-            "top": self._window.y,
-            "left": self._window.x,
-            "width": self._window.width,
-            "height": self._window.height,
-        }
-        # mss returns BGRA; drop alpha and flip to RGB.
-        raw = np.array(self._sct.grab(region), dtype=np.uint8)
-        return raw[:, :, 2::-1]  # BGRA -> RGB, shape (H, W, 3)
+        return capture_game_window(self._sct, self._window)
 
     def _preprocess_frame(self, frame: np.ndarray) -> np.ndarray:
         """Center-crop to square, resize to self.resolution, convert to grayscale, normalise to [0, 1].
@@ -181,31 +180,76 @@ class VampireSurvivorsEnv(gym.Env):
         gray = cv2.cvtColor(small, cv2.COLOR_RGB2GRAY)  # (H, W) uint8
         return gray.astype(np.float32) / 255.0
 
+    # BUG: Arcana selection is being treated as "levelup"
+    # BUG: Main menu is treated as "gameover"
+    # BUG: Darker levels mislabeled as "levelup" or "gameover"
     def _detect_game_phase(self, frame: np.ndarray) -> str:
-        """Classify the current screen as 'playing' or 'levelup'.
+        """Classify the current screen into one of: playing, levelup, card_selection, gameover, results.
 
-        Uses mean brightness of the region where the "Level Up!" header appears.
-        The level-up overlay darkens this region significantly (~100) vs normal
-        gameplay (~167), giving a large margin around the threshold.
+        Cascade (each step short-circuits):
+          1. Center brightness > threshold → levelup
+          2. Edge density in card region > threshold → card_selection or levelup
+          3. Red-channel dominance > threshold → gameover or results
+          4. Default → playing
 
-        Temporal consistency: requires _LEVELUP_CONSEC_FRAMES consecutive dark
-        frames before committing to 'levelup', preventing false positives from
-        transient dark effects (explosions, dense enemy clusters).
+        The _gameplay_started flag distinguishes card_selection (pre-run menu)
+        from levelup (in-run upgrade screen); it is set to True on the first
+        'playing' frame and reset on reset().
 
-        frame: raw HxWx3 uint8 RGB from _capture_screen (game window pixels,
-               no window chrome).  Coordinates below are for 640x480; adjust
-               _LEVELUP_ROW_SLICE / _LEVELUP_COL_SLICE if resolution changes.
+        Temporal consistency: _LEVELUP_CONSEC_FRAMES consecutive menu-phase
+        frames are required before committing, to suppress transient false
+        positives (explosions, dense enemy clusters with high edge density).
         """
-        region_mean = frame[_LEVELUP_ROW_SLICE, _LEVELUP_COL_SLICE].mean()
+        import cv2 as _cv2
 
-        if region_mean < _LEVELUP_BRIGHTNESS_THRESHOLD:
+        h, w = frame.shape[:2]
+        eps = 1e-6
+
+        center = frame[h // 4 : 3 * h // 4, w // 6 : 5 * w // 6]
+        center_mean = float(center.mean())
+
+        # Step 1 — bright overlay → levelup
+        if center_mean > _LEVELUP_CENTER_MEAN_THRESHOLD:
+            phase = "levelup"
+        else:
+            # Step 2 — high edge density → menu overlay
+            region = frame[_LEVELUP_ROW_SLICE, _LEVELUP_COL_SLICE]
+            gray = _cv2.cvtColor(region, _cv2.COLOR_RGB2GRAY)
+            edge_density = float(_cv2.Laplacian(gray, _cv2.CV_64F).var())
+
+            if edge_density > _MENU_EDGE_THRESHOLD:
+                phase = "card_selection" if not self._gameplay_started else "levelup"
+            else:
+                # Step 3 — red tint → gameover or results
+                r_mean = float(frame[:, :, 0].mean())
+                g_mean = float(frame[:, :, 1].mean())
+                b_mean = float(frame[:, :, 2].mean())
+                r_ratio = min(r_mean / (g_mean + eps), r_mean / (b_mean + eps))
+
+                if r_ratio > _RED_RATIO_THRESHOLD:
+                    phase = (
+                        "results"
+                        if center_mean > _RESULTS_PANEL_THRESHOLD
+                        else "gameover"
+                    )
+                else:
+                    phase = "playing"
+
+        # Temporal consistency: suppress transient menu-phase flickers.
+        if phase in ("levelup", "card_selection"):
             self._dark_frame_count += 1
         else:
             self._dark_frame_count = 0
+            if phase == "playing":
+                self._gameplay_started = True
 
-        if self._dark_frame_count >= _LEVELUP_CONSEC_FRAMES:
-            return "levelup"
-        return "playing"
+        if (
+            phase in ("levelup", "card_selection")
+            and self._dark_frame_count < _LEVELUP_CONSEC_FRAMES
+        ):
+            return "playing"  # not yet committed
+
+        return phase
 
     # ------------------------------------------------------------------
     # Observation & info
@@ -221,6 +265,7 @@ class VampireSurvivorsEnv(gym.Env):
         """
         latest_frame = self._capture_screen()
         self._latest_frame = latest_frame.copy()
+        self._phase = self._detect_game_phase(self._latest_frame)
         frame = self._preprocess_frame(latest_frame)
         self._frame_buf.append(frame)
 
@@ -233,7 +278,7 @@ class VampireSurvivorsEnv(gym.Env):
 
     def _get_info(self) -> Dict:
         """Return a diagnostic dict with hp, level, time, kills, and current game phase."""
-        raise NotImplementedError
+        return {"phase": self._phase}
 
     # ------------------------------------------------------------------
     # Reward

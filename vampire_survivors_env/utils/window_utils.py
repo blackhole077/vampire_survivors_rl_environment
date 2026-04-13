@@ -3,6 +3,9 @@ import time
 from dataclasses import dataclass
 from typing import Optional
 
+import mss
+import mss.base
+import numpy as np
 import Xlib.X
 import Xlib.XK
 from ewmhlib import EwmhRoot, EwmhWindow
@@ -23,6 +26,21 @@ class GameWindow:
     y: int  # absolute screen y
     width: int
     height: int
+
+
+def capture_game_window(sct: mss.base.MSSBase, window: GameWindow) -> np.ndarray:
+    """Grab the game window and return an HxWx3 uint8 RGB array.
+
+    mss returns BGRA; the alpha channel is dropped and channels are flipped to RGB.
+    """
+    region = {
+        "top": window.y,
+        "left": window.x,
+        "width": window.width,
+        "height": window.height,
+    }
+    raw = np.array(sct.grab(region), dtype=np.uint8)
+    return raw[:, :, 2::-1]  # BGRA -> RGB, shape (H, W, 3)
 
 
 def generate_keycodes(
