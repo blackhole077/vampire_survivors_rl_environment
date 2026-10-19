@@ -1,0 +1,111 @@
+{
+ "observation_space": "Dict('frames': Box(0.0, 1.0, (4, 100, 100), float32))",
+ "steps": [
+  {
+   "obs": {
+    "frames": "5ece25eb7eee351e7e83eaa1bc3505b1ce089cb505740de403f43b7e2d89b5b6"
+   },
+   "info_keys": []
+  },
+  {
+   "obs": {
+    "frames": "62e45a6ca66ff7630c4ecffae30229a89f9e01c8d429744074677a285312f3ed"
+   },
+   "info_keys": [
+    "phase"
+   ],
+   "reward": 0.0,
+   "terminated": false
+  },
+  {
+   "obs": {
+    "frames": "b2821be52626f7a453cda04a7734e9b0256cd41b68b1f82f43bbb81313bb5700"
+   },
+   "info_keys": [
+    "phase"
+   ],
+   "reward": 0.0,
+   "terminated": false
+  },
+  {
+   "obs": {
+    "frames": "be308058abe3173704a7dcad44d5925959768b31280f2966b1712279fb732300"
+   },
+   "info_keys": [
+    "phase"
+   ],
+   "reward": 0.0,
+   "terminated": false
+  },
+  {
+   "obs": {
+    "frames": "3e8defba339d23c78754b90231570718ba606d22ea863e46e6a610fa3266a8ea"
+   },
+   "info_keys": [
+    "phase"
+   ],
+   "reward": 0.0,
+   "terminated": false
+  },
+  {
+   "obs": {
+    "frames": "75bb705c6ac19cd79a69aa2e1da3ecb73a739d7dd9f5cd0515550ce9478d33a4"
+   },
+   "info_keys": [
+    "phase"
+   ],
+   "reward": 0.0,
+   "terminated": false
+  },
+  {
+   "obs": {
+    "frames": "8ff2d8218ab37083818f3d14c15c91e255fc6ae299c8d9c99ec363789a87cf39"
+   },
+   "info_keys": [
+    "phase"
+   ],
+   "reward": 0.0,
+   "terminated": false
+  },
+  {
+   "obs": {
+    "frames": "5f8737f3b12bf00cee648efbaf333597ef5478a00af6cae216e40a5c97bdb1bc"
+   },
+   "info_keys": [
+    "phase"
+   ],
+   "reward": 0.0,
+   "terminated": false
+  },
+  {
+   "obs": {
+    "frames": "e60874e28bc6215805cc341fcf94d7ca51cc6103a06470d0c4f33a4c95a2bfe3"
+   },
+   "info_keys": [
+    "phase"
+   ],
+   "reward": 0.0,
+   "terminated": false
+  },
+  {
+   "obs": {
+    "frames": "e9a66c82474fac558b182b1aee25591840af243103933abb4ad4a4a71c732ef2"
+   },
+   "info_keys": [
+    "phase"
+   ],
+   "reward": 0.0,
+   "terminated": false
+  },
+  {
+   "obs": {
+    "frames": "d97c3c0c96fb6045832077f58abb2fe1c888ba630c477a9fd9d6c85e8d96bc2c"
+   },
+   "info_keys": [
+    "phase"
+   ],
+   "reward": 0.0,
+   "terminated": false
+  }
+ ]
+}

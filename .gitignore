@@ -205,3 +205,22 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Game binaries, game data and decompiler/dumper output: never commit
+*.dll
+*.exe
+*.assets
+*.bundle
+libmonobdwgc-2.0.so
+global-metadata.dat
+dump.cs
+script.json
+il2cpp.h
+stringliteral.json
+DummyDll/
+providers/vs_memory/dumps/
+
+# Private memory-reading provider: kept out of the published repo entirely
+# (remove this line if you move it to a private repo or decide to publish it).
+# Its config.json names, per-build Mono layouts and item maps are game-derived and must never be committed.
+providers/vs_memory/

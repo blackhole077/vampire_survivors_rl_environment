@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vampire-survivors-env"
+version = "0.1.0"
+description = "Gymnasium environment for Vampire Survivors (screen capture + X11 input)."
+requires-python = ">=3.11"
+dependencies = [
+    # Lower bounds are the versions this was developed on; majors are capped
+    "gymnasium>=1.2,<2",
+    "numpy>=2.4,<3",
+    "opencv-python>=4.13,<5",
+    "mss>=10.1,<11",
+    "pytesseract>=0.3.13,<0.4",
+    "python-xlib>=0.33,<0.34",
+    "ewmhlib>=0.2,<0.3",
+]
+
+[dependency-groups]
+dev = ["pytest>=9,<10"]
+
+[tool.setuptools.packages.find]
+include = ["vampire_survivors_env*"]
+
+[tool.setuptools.package-data]
+"vampire_survivors_env.features" = ["vocab.json"]

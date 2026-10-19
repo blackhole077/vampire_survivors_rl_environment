@@ -81,21 +81,25 @@ def tap_key(display: Display, keycode: int, hold_secs: float = 0.05) -> None:
 
 
 def find_vs_xid(win: XWindow) -> Optional[int]:
-    """Recursively walk the full X11 window tree and return the XID of the
-    Vampire Survivors rendering window, or None if not found.
+    """Walk the full X11 window tree and return the XID of the Vampire
+    Survivors rendering window, or None if not found.
 
-    Matches on WM_CLASS first (set by Wine/Proton from the exe name, stable
-    across locales) with WM_NAME as fallback.  getClientList() only covers
-    WM-managed top-level windows; the actual game window is a child not
-    registered there, so a full tree walk is required.
+    Matches on WM_CLASS first (set from the exe name, stable across locales)
+    over the whole tree, and only then on WM_NAME, so another window titled
+    "Vampire Survivors" (e.g. a file manager open on the game folder) is not
+    picked over the game.  getClientList() only covers WM-managed top-level
+    windows; the actual game window is a child not registered there, so a
+    full tree walk is required.
     """
+    return _find_xid(win, lambda w: w.get_wm_class() == _VS_WM_CLASS) or _find_xid(
+        win, lambda w: w.get_wm_name() == _VS_WM_NAME
+    )
+
+
+def _find_xid(win: XWindow, match) -> Optional[int]:
+    """Depth-first search for the first window satisfying match."""
     try:
-        if win.get_wm_class() == _VS_WM_CLASS:
-            return win.id
-    except Exception:
-        pass
-    try:
-        if win.get_wm_name() == _VS_WM_NAME:
+        if match(win):
             return win.id
     except Exception:
         pass
@@ -104,7 +108,7 @@ def find_vs_xid(win: XWindow) -> Optional[int]:
     except Exception:
         return None
     for child in children:
-        result = find_vs_xid(child)
+        result = _find_xid(child, match)
         if result is not None:
             return result
     return None

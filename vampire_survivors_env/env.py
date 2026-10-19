@@ -1,24 +1,33 @@
+import re
 import time
 from collections import deque
-from typing import Any, Dict, Optional, SupportsFloat
+from typing import Any, Dict, Optional, SupportsFloat, Union
 
 import cv2
 import gymnasium as gym
 import mss
 import numpy as np
+import pytesseract
 from ewmhlib import EwmhRoot
 from Xlib.display import Display
 
 from vampire_survivors_env.constants import (
     _ACTION_KEYS,
+    _CARD_RED_RATIO_THRESHOLD,
     _LEVELUP_CENTER_MEAN_THRESHOLD,
     _LEVELUP_COL_SLICE,
     _LEVELUP_CONSEC_FRAMES,
     _LEVELUP_ROW_SLICE,
+    _MENU_CENTER_THRESHOLD,
     _MENU_EDGE_THRESHOLD,
     _RED_RATIO_THRESHOLD,
     _RESULTS_PANEL_THRESHOLD,
+    _SURVIVED_OCR_SCALE,
+    _SURVIVED_THRESH,
+    _SURVIVED_TIME_ROI,
 )
+from vampire_survivors_env.features.loader import load_provider
+from vampire_survivors_env.features.spec import check_compatible, null_frame
 from vampire_survivors_env.utils.window_utils import (
     GameWindow,
     capture_game_window,
@@ -48,6 +57,8 @@ class VampireSurvivorsEnv(gym.Env):
         action_repeat: int = 4,
         resolution: tuple[int, int] = (100, 100),
         reward_scale: float = 1.0,
+        feature_provider: Union[None, str, object] = None,
+        feature_provider_kwargs: Optional[dict[str, Any]] = None,
     ) -> None:
         """Set up observation/action spaces and connect to the game window.
 
@@ -55,6 +66,12 @@ class VampireSurvivorsEnv(gym.Env):
         action_repeat holds each action for that many frames before returning.
         resolution is the (H, W) to which captured frames are downsampled.
         reward_scale multiplies all reward signals.
+        feature_provider optionally adds structured game-state features (see
+        vampire_survivors_env/features/spec.py): a provider instance, a
+        "package.module:Name" import path, or an entry-point name, constructed
+        with feature_provider_kwargs.  When set, observations gain a "features"
+        key and info gains features_ok / features_read_ms / features_error.
+        When None (the default) observations and info are pixel-only, as before.
         """
         super().__init__()
         self.render_mode = render_mode
@@ -73,13 +90,26 @@ class VampireSurvivorsEnv(gym.Env):
         self._dark_frame_count: int = 0
         self._gameplay_started: bool = False
         self._latest_frame: Optional[np.ndarray] = None
+        self._terminal_reward: Optional[float] = None
+        self._phase: str = "playing"
 
         # Circular buffer of preprocessed (H, W) float32 frames.
         self._frame_buf: deque[np.ndarray] = deque(maxlen=frame_stack)
 
+        # Optional feature provider.  Config errors (bad import path,
+        # incompatible spec version) raise here; runtime errors never do.
+        self._provider: Optional[object] = None
+        self._feature_space: Optional[gym.spaces.Dict] = None
+        self._provider_attached: bool = False
+        self._provider_attach_error: Optional[str] = None
+        self._feature_status: dict[str, Any] = {}
+        if feature_provider is not None:
+            self._provider = load_provider(feature_provider, feature_provider_kwargs)
+            self._feature_space = check_compatible(self._provider)
+            self._attach_provider()
+
         h, w = resolution
-        self.observation_space = gym.spaces.Dict(
-            {
+        obs_spaces: dict[str, gym.spaces.Space] = {
                 # (frame_stack, H, W) — channel-first for Conv2d.
                 # H×W is the pre-augmentation storage size (e.g. 100×100);
                 # CURL random crops to the final training size (e.g. 84×84)
@@ -91,7 +121,9 @@ class VampireSurvivorsEnv(gym.Env):
                     dtype=np.float32,
                 ),
             }
-        )
+        if self._provider is not None:
+            obs_spaces["features"] = self._feature_space
+        self.observation_space = gym.spaces.Dict(obs_spaces)
         self.action_space = gym.spaces.Discrete(len(_ACTION_KEYS))
 
     # ------------------------------------------------------------------
@@ -111,27 +143,55 @@ class VampireSurvivorsEnv(gym.Env):
         # self._navigate_to_quick_start()
         self._dark_frame_count = 0
         self._gameplay_started = False
+        self._terminal_reward = None
+        self._phase = "playing"
+        if self._provider is not None and not self._provider_attached:
+            self._attach_provider()
         focus_window(self._display, self._window.xid)
         obs = self._get_obs()
         info = {}
+        if self._provider is not None:
+            info.update(self._feature_status)
         return obs, info
         # raise NotImplementedError
 
     def step(
         self, action: int
     ) -> tuple[Dict, SupportsFloat, bool, bool, dict[str, Any]]:
-        """Send action to the game, advance action_repeat frames, return transition.
+        """Send action to the game, advance one frame, return transition.
 
-        In MOVEMENT phase the action selects a cardinal/diagonal direction or
-        stay.  In LEVELUP phase the action selects one of the presented upgrade
-        cards.  Returns (obs, reward, terminated, truncated, info).
+        During normal play the action selects a cardinal/diagonal direction or
+        stay.  During the gameover animation (before the results screen appears)
+        no action is sent and the episode is kept alive.  The episode terminates
+        on the first results frame; the terminal reward is the survival time in
+        seconds (OCR'd once and cached so repeated results frames don't re-run
+        Tesseract).  Returns (obs, reward, terminated, truncated, info).
         """
-        self._send_movement_action(action)
-        obs = self._get_obs()
-        reward = 0.0
-        terminated = False
+        if self._phase == "gameover":
+            # Release all held keys; do not press anything during the death animation.
+            self._send_movement_action(0)  # action 0 = frozenset() = no keys
+        elif self._phase != "results":
+            self._send_movement_action(action)
+
+        obs = self._get_obs()  # updates self._phase
         truncated = False
+
+        if self._phase == "results":
+            if self._terminal_reward is None:
+                secs = self._extract_survival_seconds(self._latest_frame)
+                self._terminal_reward = float(secs) * self.reward_scale if secs is not None else 0.0
+            reward = self._terminal_reward
+            terminated = True
+        elif self._phase == "gameover":
+            reward = 0.0
+            terminated = False  # stay alive until results screen appears
+        else:
+            reward = 0.0
+            terminated = False
+
         info = self._get_info()
+        if self._terminal_reward is not None:
+            info["survived_seconds"] = round(self._terminal_reward / self.reward_scale)
         return obs, reward, terminated, truncated, info
 
     def render(self) -> Optional[np.ndarray]:
@@ -146,8 +206,13 @@ class VampireSurvivorsEnv(gym.Env):
         return self._latest_frame
 
     def close(self) -> None:
-        """Release the screen-capture handle and any open input devices."""
+        """Release the screen-capture handle, any open input devices, and the feature provider."""
         self._sct.close()
+        if self._provider is not None:
+            try:
+                self._provider.close()
+            except Exception:
+                pass
 
     # ------------------------------------------------------------------
     # Screen capture & parsing
@@ -208,24 +273,30 @@ class VampireSurvivorsEnv(gym.Env):
         center = frame[h // 4 : 3 * h // 4, w // 6 : 5 * w // 6]
         center_mean = float(center.mean())
 
+        r_mean = float(frame[:, :, 0].mean())
+        g_mean = float(frame[:, :, 1].mean())
+        b_mean = float(frame[:, :, 2].mean())
+        r_ratio = min(r_mean / (g_mean + eps), r_mean / (b_mean + eps))
+
         # Step 1 — bright overlay → levelup
         if center_mean > _LEVELUP_CENTER_MEAN_THRESHOLD:
             phase = "levelup"
         else:
-            # Step 2 — high edge density → menu overlay
+            # Step 2 — high edge density → menu overlay.
+            # Also require either high center brightness (card_sel A, levelup)
+            # or very high r_ratio (red-tinted card_sel B) to avoid false
+            # positives on dark-level gameplay/gameover frames.
             region = frame[_LEVELUP_ROW_SLICE, _LEVELUP_COL_SLICE]
             gray = _cv2.cvtColor(region, _cv2.COLOR_RGB2GRAY)
             edge_density = float(_cv2.Laplacian(gray, _cv2.CV_64F).var())
 
-            if edge_density > _MENU_EDGE_THRESHOLD:
+            if edge_density > _MENU_EDGE_THRESHOLD and (
+                center_mean > _MENU_CENTER_THRESHOLD
+                or r_ratio > _CARD_RED_RATIO_THRESHOLD
+            ):
                 phase = "card_selection" if not self._gameplay_started else "levelup"
             else:
                 # Step 3 — red tint → gameover or results
-                r_mean = float(frame[:, :, 0].mean())
-                g_mean = float(frame[:, :, 1].mean())
-                b_mean = float(frame[:, :, 2].mean())
-                r_ratio = min(r_mean / (g_mean + eps), r_mean / (b_mean + eps))
-
                 if r_ratio > _RED_RATIO_THRESHOLD:
                     phase = (
                         "results"
@@ -274,19 +345,99 @@ class VampireSurvivorsEnv(gym.Env):
         while len(frames) < self.frame_stack:
             frames.insert(0, frames[0])
 
-        return {"frames": np.stack(frames, axis=0)}  # (C, H, W)
+        obs = {"frames": np.stack(frames, axis=0)}  # (C, H, W)
+        if self._provider is not None:
+            obs["features"] = self._read_features()
+        return obs
 
     def _get_info(self) -> Dict:
         """Return a diagnostic dict with hp, level, time, kills, and current game phase."""
-        return {"phase": self._phase}
+        info = {"phase": self._phase}
+        if self._provider is not None:
+            info.update(self._feature_status)
+        return info
+
+    # ------------------------------------------------------------------
+    # Feature provider
+    # ------------------------------------------------------------------
+
+    def _attach_provider(self) -> None:
+        """Attach the provider to the game process; on failure record why and retry on reset()."""
+        assert self._provider is not None and self._window is not None
+        try:
+            self._provider.attach(self._window.pid if self._window.pid > 0 else None)
+            self._provider_attached = True
+            self._provider_attach_error = None
+        except Exception as e:
+            self._provider_attached = False
+            self._provider_attach_error = f"attach failed: {type(e).__name__}: {e}"
+
+    def _read_features(self) -> dict[str, np.ndarray]:
+        """Read one feature frame, never raising.
+
+        Falls back to null_frame (valid=0) when the provider is unattached,
+        returns None, raises, or returns a frame outside its declared space,
+        and records the outcome in self._feature_status for info.
+        """
+        assert self._provider is not None and self._feature_space is not None
+        t0 = time.perf_counter()
+        frame, error = None, None
+        if not self._provider_attached:
+            error = self._provider_attach_error
+        else:
+            try:
+                frame = self._provider.read()
+                if frame is not None and not self._feature_space.contains(frame):
+                    frame, error = None, "provider frame is outside its declared observation space"
+            except Exception as e:
+                error = f"{type(e).__name__}: {e}"
+
+        if frame is None:
+            features = null_frame(self._feature_space)
+        else:
+            features = {
+                k: np.asarray(frame[k], dtype=sub.dtype) for k, sub in self._feature_space.spaces.items()
+            }
+        self._feature_status = {
+            "features_ok": frame is not None,
+            "features_read_ms": (time.perf_counter() - t0) * 1e3,
+        }
+        if error is not None:
+            self._feature_status["features_error"] = error
+        return features
 
     # ------------------------------------------------------------------
     # Reward
     # ------------------------------------------------------------------
 
-    def _compute_reward(self) -> float:
-        """Compute the step reward from delta-kills, delta-XP, HP change, and survival bonus."""
-        raise NotImplementedError
+    def _extract_survival_seconds(self, frame: np.ndarray) -> Optional[int]:
+        """OCR the 'Survived: MM:SS' value from a results-screen frame.
+
+        Returns total seconds survived, or None if the text cannot be parsed
+        (e.g. the frame is not actually a results screen).
+        """
+        y_sl, x_sl = _SURVIVED_TIME_ROI
+        crop = frame[y_sl, x_sl]
+        big = cv2.resize(
+            crop,
+            (0, 0),
+            fx=_SURVIVED_OCR_SCALE,
+            fy=_SURVIVED_OCR_SCALE,
+            interpolation=cv2.INTER_CUBIC,
+        )
+        gray = cv2.cvtColor(big, cv2.COLOR_RGB2GRAY)
+        _, thresh = cv2.threshold(gray, _SURVIVED_THRESH, 255, cv2.THRESH_BINARY_INV)
+        padded = cv2.copyMakeBorder(
+            thresh, 20, 20, 20, 20, cv2.BORDER_CONSTANT, value=255
+        )
+        text = pytesseract.image_to_string(
+            padded,
+            config="--psm 7 --oem 3 -c tessedit_char_whitelist=0123456789:",
+        ).strip()
+        m = re.fullmatch(r"(\d{1,2}):(\d{2})", text)
+        if not m:
+            return None
+        return int(m.group(1)) * 60 + int(m.group(2))
 
     # ------------------------------------------------------------------
     # Action execution

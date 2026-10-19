@@ -1,0 +1,3129 @@
+{
+ "vocab_version": 1,
+ "comment": "Append-only. Never renumber, reuse, or delete an index; retire entries by setting \"deprecated\": true. 0=EMPTY and 1=UNKNOWN are reserved.",
+ "source": "Seeded from vampire.survivors.wiki 'Weapons' and 'Passive items' pages (fetched 2026-10-18) plus level-up filler pickups.",
+ "entries": [
+  {
+   "index": 0,
+   "key": "EMPTY",
+   "name": "",
+   "category": "reserved",
+   "dlc": null
+  },
+  {
+   "index": 1,
+   "key": "UNKNOWN",
+   "name": "",
+   "category": "reserved",
+   "dlc": null
+  },
+  {
+   "index": 2,
+   "key": "WHIP",
+   "name": "Whip",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 3,
+   "key": "MAGIC_WAND",
+   "name": "Magic Wand",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 4,
+   "key": "KNIFE",
+   "name": "Knife",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 5,
+   "key": "AXE",
+   "name": "Axe",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 6,
+   "key": "CROSS",
+   "name": "Cross",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 7,
+   "key": "KING_BIBLE",
+   "name": "King Bible",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 8,
+   "key": "FIRE_WAND",
+   "name": "Fire Wand",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 9,
+   "key": "GARLIC",
+   "name": "Garlic",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 10,
+   "key": "SANTA_WATER",
+   "name": "Santa Water",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 11,
+   "key": "RUNETRACER",
+   "name": "Runetracer",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 12,
+   "key": "LIGHTNING_RING",
+   "name": "Lightning Ring",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 13,
+   "key": "PENTAGRAM",
+   "name": "Pentagram",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 14,
+   "key": "PEACHONE",
+   "name": "Peachone",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 15,
+   "key": "EBONY_WINGS",
+   "name": "Ebony Wings",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 16,
+   "key": "PHIERA_DER_TUPHELLO",
+   "name": "Phiera Der Tuphello",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 17,
+   "key": "EIGHT_THE_SPARROW",
+   "name": "Eight The Sparrow",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 18,
+   "key": "GATTI_AMARI",
+   "name": "Gatti Amari",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 19,
+   "key": "SONG_OF_MANA",
+   "name": "Song of Mana",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 20,
+   "key": "SHADOW_PINION",
+   "name": "Shadow Pinion",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 21,
+   "key": "CLOCK_LANCET",
+   "name": "Clock Lancet",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 22,
+   "key": "LAUREL",
+   "name": "Laurel",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 23,
+   "key": "VENTO_SACRO",
+   "name": "Vento Sacro",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 24,
+   "key": "BONE",
+   "name": "Bone",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 25,
+   "key": "CHERRY_BOMB",
+   "name": "Cherry Bomb",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 26,
+   "key": "CARRELLO",
+   "name": "Carréllo",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 27,
+   "key": "CELESTIAL_DUSTING",
+   "name": "Celestial Dusting",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 28,
+   "key": "LA_ROBBA",
+   "name": "La Robba",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 29,
+   "key": "GREATEST_JUBILEE",
+   "name": "Greatest Jubilee",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 30,
+   "key": "BRACELET",
+   "name": "Bracelet",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 31,
+   "key": "CANDYBOX",
+   "name": "Candybox",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 32,
+   "key": "VICTORY_SWORD",
+   "name": "Victory Sword",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 33,
+   "key": "FLAMES_OF_MISSPELL",
+   "name": "Flames of Misspell",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 34,
+   "key": "PAKO_BATTILIAR",
+   "name": "Pako Battiliar",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 35,
+   "key": "AMMO_APPALATE",
+   "name": "Ammo Appalate",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 36,
+   "key": "UNEARTHLY_BOLT",
+   "name": "Unearthly Bolt",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 37,
+   "key": "GLASS_FANDANGO",
+   "name": "Glass Fandango",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 38,
+   "key": "PENSHIN_FATCHA",
+   "name": "Penshin Fatcha",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 39,
+   "key": "TONNO_SUBITO",
+   "name": "Tonno Subito",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 40,
+   "key": "TONNADO",
+   "name": "Tonnado",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 41,
+   "key": "TONN_OMOTO",
+   "name": "Tonn'omoto",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 42,
+   "key": "TONN_ODDEEO",
+   "name": "Tonn'oddeeo",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 43,
+   "key": "TONNE",
+   "name": "Tonne",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 44,
+   "key": "UNSURPASSED",
+   "name": "Unsurpassed",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 45,
+   "key": "SANTA_JAVELIN",
+   "name": "Santa Javelin",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 46,
+   "key": "GAZE_OF_GAEA",
+   "name": "Gaze of Gaea",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 47,
+   "key": "MAGI_STONE",
+   "name": "Magi-Stone",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 48,
+   "key": "PHAS3R",
+   "name": "Phas3r",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 49,
+   "key": "CHAOS_RUNE",
+   "name": "Chaos Rune",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 50,
+   "key": "ARMA_DIO",
+   "name": "Arma Dio",
+   "category": "weapon",
+   "dlc": null
+  },
+  {
+   "index": 51,
+   "key": "SILVER_WIND",
+   "name": "Silver Wind",
+   "category": "weapon",
+   "dlc": "lm"
+  },
+  {
+   "index": 52,
+   "key": "FOUR_SEASONS",
+   "name": "Four Seasons",
+   "category": "weapon",
+   "dlc": "lm"
+  },
+  {
+   "index": 53,
+   "key": "SUMMON_NIGHT",
+   "name": "Summon Night",
+   "category": "weapon",
+   "dlc": "lm"
+  },
+  {
+   "index": 54,
+   "key": "MIRAGE_ROBE",
+   "name": "Mirage Robe",
+   "category": "weapon",
+   "dlc": "lm"
+  },
+  {
+   "index": 55,
+   "key": "NIGHT_SWORD",
+   "name": "Night Sword",
+   "category": "weapon",
+   "dlc": "lm"
+  },
+  {
+   "index": 56,
+   "key": "MILLE_BOLLE_BLU",
+   "name": "Mille Bolle Blu",
+   "category": "weapon",
+   "dlc": "lm"
+  },
+  {
+   "index": 57,
+   "key": "108_BOCCE",
+   "name": "108 Bocce",
+   "category": "weapon",
+   "dlc": "lm"
+  },
+  {
+   "index": 58,
+   "key": "LUNARMIGHT",
+   "name": "LunarMight",
+   "category": "weapon",
+   "dlc": "lm"
+  },
+  {
+   "index": 59,
+   "key": "LUNARSIGHT",
+   "name": "LunarSight",
+   "category": "weapon",
+   "dlc": "lm"
+  },
+  {
+   "index": 60,
+   "key": "LUNARBIGHT",
+   "name": "LunarBight",
+   "category": "weapon",
+   "dlc": "lm"
+  },
+  {
+   "index": 61,
+   "key": "SCARLET_NEEDLE",
+   "name": "Scarlet Needle",
+   "category": "weapon",
+   "dlc": "bm"
+  },
+  {
+   "index": 62,
+   "key": "ASHELLA",
+   "name": "Ashella",
+   "category": "weapon",
+   "dlc": "bm"
+  },
+  {
+   "index": 63,
+   "key": "INCINERATION",
+   "name": "Incineration",
+   "category": "weapon",
+   "dlc": "bm"
+  },
+  {
+   "index": 64,
+   "key": "SCREAMS_FROM_THE_VOID",
+   "name": "Screams from the Void",
+   "category": "weapon",
+   "dlc": "bm"
+  },
+  {
+   "index": 65,
+   "key": "BLACKEN_FIRMAMENT",
+   "name": "Blacken Firmament",
+   "category": "weapon",
+   "dlc": "bm"
+  },
+  {
+   "index": 66,
+   "key": "108_RESPONSIVE_PRAYERS",
+   "name": "108 Responsive Prayers",
+   "category": "weapon",
+   "dlc": "bm"
+  },
+  {
+   "index": 67,
+   "key": "FIREFALL",
+   "name": "FireFall",
+   "category": "weapon",
+   "dlc": "bm"
+  },
+  {
+   "index": 68,
+   "key": "FIREBALL",
+   "name": "FireBall",
+   "category": "weapon",
+   "dlc": "bm"
+  },
+  {
+   "index": 69,
+   "key": "FIREWALL",
+   "name": "FireWall",
+   "category": "weapon",
+   "dlc": "bm"
+  },
+  {
+   "index": 70,
+   "key": "DESCENT_INTO_MISERY",
+   "name": "Descent Into Misery",
+   "category": "weapon",
+   "dlc": "bm"
+  },
+  {
+   "index": 71,
+   "key": "SPELLSTRING",
+   "name": "SpellString",
+   "category": "weapon",
+   "dlc": "tf"
+  },
+  {
+   "index": 72,
+   "key": "SPELLSTREAM",
+   "name": "SpellStream",
+   "category": "weapon",
+   "dlc": "tf"
+  },
+  {
+   "index": 73,
+   "key": "SPELLSTRIKE",
+   "name": "SpellStrike",
+   "category": "weapon",
+   "dlc": "tf"
+  },
+  {
+   "index": 74,
+   "key": "ESKIZZIBUR",
+   "name": "Eskizzibur",
+   "category": "weapon",
+   "dlc": "tf"
+  },
+  {
+   "index": 75,
+   "key": "FLASH_ARROW",
+   "name": "Flash Arrow",
+   "category": "weapon",
+   "dlc": "tf"
+  },
+  {
+   "index": 76,
+   "key": "PRISMATIC_MISSILE",
+   "name": "Prismatic Missile",
+   "category": "weapon",
+   "dlc": "tf"
+  },
+  {
+   "index": 77,
+   "key": "SHADOW_SERVANT",
+   "name": "Shadow Servant",
+   "category": "weapon",
+   "dlc": "tf"
+  },
+  {
+   "index": 78,
+   "key": "PARTY_POPPER",
+   "name": "Party Popper",
+   "category": "weapon",
+   "dlc": "tf"
+  },
+  {
+   "index": 79,
+   "key": "REPORT",
+   "name": "Report!",
+   "category": "weapon",
+   "dlc": "em"
+  },
+  {
+   "index": 80,
+   "key": "LUCKY_SWIPE",
+   "name": "Lucky Swipe",
+   "category": "weapon",
+   "dlc": "em"
+  },
+  {
+   "index": 81,
+   "key": "LIFESIGN_SCAN",
+   "name": "Lifesign Scan",
+   "category": "weapon",
+   "dlc": "em"
+  },
+  {
+   "index": 82,
+   "key": "JUST_VENT",
+   "name": "Just Vent",
+   "category": "weapon",
+   "dlc": "em"
+  },
+  {
+   "index": 83,
+   "key": "CLEAR_DEBRIS",
+   "name": "Clear Debris",
+   "category": "weapon",
+   "dlc": "em"
+  },
+  {
+   "index": 84,
+   "key": "SHARP_TONGUE",
+   "name": "Sharp Tongue",
+   "category": "weapon",
+   "dlc": "em"
+  },
+  {
+   "index": 85,
+   "key": "SCIENCE_ROCKS",
+   "name": "Science Rocks",
+   "category": "weapon",
+   "dlc": "em"
+  },
+  {
+   "index": 86,
+   "key": "HATS",
+   "name": "Hats",
+   "category": "weapon",
+   "dlc": "em"
+  },
+  {
+   "index": 87,
+   "key": "LONG_GUN",
+   "name": "Long Gun",
+   "category": "weapon",
+   "dlc": "og"
+  },
+  {
+   "index": 88,
+   "key": "SHORT_GUN",
+   "name": "Short Gun",
+   "category": "weapon",
+   "dlc": "og"
+  },
+  {
+   "index": 89,
+   "key": "SPREAD_SHOT",
+   "name": "Spread Shot",
+   "category": "weapon",
+   "dlc": "og"
+  },
+  {
+   "index": 90,
+   "key": "C_U_LASER",
+   "name": "C-U-Laser",
+   "category": "weapon",
+   "dlc": "og"
+  },
+  {
+   "index": 91,
+   "key": "FIREARM",
+   "name": "Firearm",
+   "category": "weapon",
+   "dlc": "og"
+  },
+  {
+   "index": 92,
+   "key": "SONIC_BLOOM",
+   "name": "Sonic Bloom",
+   "category": "weapon",
+   "dlc": "og"
+  },
+  {
+   "index": 93,
+   "key": "HOMING_MISS",
+   "name": "Homing Miss",
+   "category": "weapon",
+   "dlc": "og"
+  },
+  {
+   "index": 94,
+   "key": "DIVER_MINES",
+   "name": "Diver Mines",
+   "category": "weapon",
+   "dlc": "og"
+  },
+  {
+   "index": 95,
+   "key": "BLADE_CROSSBOW",
+   "name": "Blade Crossbow",
+   "category": "weapon",
+   "dlc": "og"
+  },
+  {
+   "index": 96,
+   "key": "PRISM_LASS",
+   "name": "Prism Lass",
+   "category": "weapon",
+   "dlc": "og"
+  },
+  {
+   "index": 97,
+   "key": "METAL_CLAW",
+   "name": "Metal Claw",
+   "category": "weapon",
+   "dlc": "og"
+  },
+  {
+   "index": 98,
+   "key": "ALCHEMY_WHIP",
+   "name": "Alchemy Whip",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 99,
+   "key": "WIND_WHIP",
+   "name": "Wind Whip",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 100,
+   "key": "PLATINUM_WHIP",
+   "name": "Platinum Whip",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 101,
+   "key": "DRAGON_WATER_WHIP",
+   "name": "Dragon Water Whip",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 102,
+   "key": "SONIC_WHIP",
+   "name": "Sonic Whip",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 103,
+   "key": "JET_BLACK_WHIP",
+   "name": "Jet Black Whip",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 104,
+   "key": "VIBHUTI_WHIP",
+   "name": "Vibhuti Whip",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 105,
+   "key": "VANITAS_WHIP",
+   "name": "Vanitas Whip",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 106,
+   "key": "SHURIKEN",
+   "name": "Shuriken",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 107,
+   "key": "CURVED_KNIFE",
+   "name": "Curved Knife",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 108,
+   "key": "JAVELIN",
+   "name": "Javelin",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 109,
+   "key": "DISCUS",
+   "name": "Discus",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 110,
+   "key": "IRON_BALL",
+   "name": "Iron Ball",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 111,
+   "key": "SILVER_REVOLVER",
+   "name": "Silver Revolver",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 112,
+   "key": "HAND_GRENADE",
+   "name": "Hand Grenade",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 113,
+   "key": "WINE_GLASS",
+   "name": "Wine Glass",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 114,
+   "key": "RAGING_FIRE",
+   "name": "Raging Fire",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 115,
+   "key": "ICE_FANG",
+   "name": "Ice Fang",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 116,
+   "key": "GALE_FORCE",
+   "name": "Gale Force",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 117,
+   "key": "ROCK_RIOT",
+   "name": "Rock Riot",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 118,
+   "key": "FULGUR",
+   "name": "Fulgur",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 119,
+   "key": "KEREMET_BUBBLES",
+   "name": "Keremet Bubbles",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 120,
+   "key": "HEX",
+   "name": "Hex",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 121,
+   "key": "REFECTIO",
+   "name": "Refectio",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 122,
+   "key": "MACE",
+   "name": "Mace",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 123,
+   "key": "STAR_FLAIL",
+   "name": "Star Flail",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 124,
+   "key": "ALUCARD_SPEAR",
+   "name": "Alucard Spear",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 125,
+   "key": "TRIDENT",
+   "name": "Trident",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 126,
+   "key": "IRON_SHIELD",
+   "name": "Iron Shield",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 127,
+   "key": "GUARDIAN_S_TARGE",
+   "name": "Guardian's Targe",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 128,
+   "key": "TYRFING",
+   "name": "Tyrfing",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 129,
+   "key": "ALUCART_SWORB",
+   "name": "Alucart Sworb",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 130,
+   "key": "CONFODERE",
+   "name": "Confodere",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 131,
+   "key": "GLOBUS",
+   "name": "Globus",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 132,
+   "key": "OPTICAL_SHOT",
+   "name": "Optical Shot",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 133,
+   "key": "DEXTRO_CUSTOS",
+   "name": "Dextro Custos",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 134,
+   "key": "SINESTRO_CUSTOS",
+   "name": "Sinestro Custos",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 135,
+   "key": "CENTRALIS_CUSTOS",
+   "name": "Centralis Custos",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 136,
+   "key": "DOMINUS_ANGER",
+   "name": "Dominus Anger",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 137,
+   "key": "DOMINUS_HATRED",
+   "name": "Dominus Hatred",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 138,
+   "key": "DOMINUS_AGONY",
+   "name": "Dominus Agony",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 139,
+   "key": "SONIC_DASH",
+   "name": "Sonic Dash",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 140,
+   "key": "LUMINATIO",
+   "name": "Luminatio",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 141,
+   "key": "UMBRA",
+   "name": "Umbra",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 142,
+   "key": "MORNING_STAR",
+   "name": "Morning Star",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 143,
+   "key": "COAT_OF_ARMS",
+   "name": "Coat of Arms",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 144,
+   "key": "BELNADES_SPELLBOOK",
+   "name": "Belnades' Spellbook",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 145,
+   "key": "SPECTRAL_SWORD",
+   "name": "Spectral Sword",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 146,
+   "key": "EBONY_DIABOLOGUE",
+   "name": "Ebony Diabologue",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 147,
+   "key": "VALMANWAY",
+   "name": "Valmanway",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 148,
+   "key": "ICEBRAND",
+   "name": "Icebrand",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 149,
+   "key": "ARROW_OF_GOTH",
+   "name": "Arrow of Goth",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 150,
+   "key": "AURA_BLAST",
+   "name": "Aura Blast",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 151,
+   "key": "KAISER_KNUCKLE",
+   "name": "Kaiser Knuckle",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 152,
+   "key": "POCKET_KNIFE",
+   "name": "Pocket Knife",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 153,
+   "key": "SVAROG_STATUE",
+   "name": "Svarog Statue",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 154,
+   "key": "TROLL_BOMB",
+   "name": "Troll Bomb",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 155,
+   "key": "HYDRO_STORM",
+   "name": "Hydro Storm",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 156,
+   "key": "GRAND_CROSS",
+   "name": "Grand Cross",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 157,
+   "key": "SUMMON_SPIRIT",
+   "name": "Summon Spirit",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 158,
+   "key": "SOUL_STEAL",
+   "name": "Soul Steal",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 159,
+   "key": "DARK_RIFT",
+   "name": "Dark Rift",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 160,
+   "key": "SWORD_BROTHERS",
+   "name": "Sword Brothers",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 161,
+   "key": "SUMMON_SPIRIT_TORNADO",
+   "name": "Summon Spirit Tornado",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 162,
+   "key": "ANURA",
+   "name": "Anura",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 163,
+   "key": "ENDO_GEARS",
+   "name": "Endo Gears",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 164,
+   "key": "PERI_PENDULUM",
+   "name": "Peri Pendulum",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 165,
+   "key": "MYO_LIFT",
+   "name": "Myo Lift",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 166,
+   "key": "EPI_HEAD",
+   "name": "Epi Head",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 167,
+   "key": "FAMILIAR_FORGE",
+   "name": "Familiar Forge",
+   "category": "weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 168,
+   "key": "FLEURET",
+   "name": "Fleuret",
+   "category": "weapon",
+   "dlc": "ed"
+  },
+  {
+   "index": 169,
+   "key": "TOWN_SWORD",
+   "name": "Town Sword",
+   "category": "weapon",
+   "dlc": "ed"
+  },
+  {
+   "index": 170,
+   "key": "SPLASHERS",
+   "name": "Splashers",
+   "category": "weapon",
+   "dlc": "ed"
+  },
+  {
+   "index": 171,
+   "key": "FLAMBERGE",
+   "name": "Flamberge",
+   "category": "weapon",
+   "dlc": "ed"
+  },
+  {
+   "index": 172,
+   "key": "PUNCH",
+   "name": "Punch",
+   "category": "weapon",
+   "dlc": "ed"
+  },
+  {
+   "index": 173,
+   "key": "KICK",
+   "name": "Kick",
+   "category": "weapon",
+   "dlc": "ed"
+  },
+  {
+   "index": 174,
+   "key": "SABER_MACHINE_GUN",
+   "name": "Saber Machine Gun",
+   "category": "weapon",
+   "dlc": "ed"
+  },
+  {
+   "index": 175,
+   "key": "SUPER_MISSILE",
+   "name": "Super Missile",
+   "category": "weapon",
+   "dlc": "ed"
+  },
+  {
+   "index": 176,
+   "key": "EAGLE_GUN",
+   "name": "Eagle Gun",
+   "category": "weapon",
+   "dlc": "ed"
+  },
+  {
+   "index": 177,
+   "key": "KHUKURI",
+   "name": "Khukuri",
+   "category": "weapon",
+   "dlc": "ed"
+  },
+  {
+   "index": 178,
+   "key": "TWIN_DRAGON",
+   "name": "Twin Dragon",
+   "category": "weapon",
+   "dlc": "ed"
+  },
+  {
+   "index": 179,
+   "key": "BULLOVA",
+   "name": "Bullova",
+   "category": "weapon",
+   "dlc": "ed"
+  },
+  {
+   "index": 180,
+   "key": "SANGUINE_STAR",
+   "name": "Sanguine Star",
+   "category": "weapon",
+   "dlc": "ed"
+  },
+  {
+   "index": 181,
+   "key": "GLAIVE",
+   "name": "Glaive",
+   "category": "weapon",
+   "dlc": "ed"
+  },
+  {
+   "index": 182,
+   "key": "SPIRIT_RINGS",
+   "name": "Spirit Rings",
+   "category": "weapon",
+   "dlc": "ed"
+  },
+  {
+   "index": 183,
+   "key": "EMERALD_RAPTURE",
+   "name": "Emerald Rapture",
+   "category": "weapon",
+   "dlc": "ed"
+  },
+  {
+   "index": 184,
+   "key": "INTUITION",
+   "name": "Intuition",
+   "category": "weapon",
+   "dlc": "ed"
+  },
+  {
+   "index": 185,
+   "key": "INFERNOLATRO",
+   "name": "Infernolatro",
+   "category": "weapon",
+   "dlc": "ac"
+  },
+  {
+   "index": 186,
+   "key": "GROS_MICHEL",
+   "name": "Gros Michel",
+   "category": "weapon",
+   "dlc": "ac"
+  },
+  {
+   "index": 187,
+   "key": "FIBONACCI_SPRITZ",
+   "name": "Fibonacci Spritz",
+   "category": "weapon",
+   "dlc": "ac"
+  },
+  {
+   "index": 188,
+   "key": "CELESTIAL_BOOSTER",
+   "name": "Celestial Booster",
+   "category": "weapon",
+   "dlc": "ac"
+  },
+  {
+   "index": 189,
+   "key": "BLOODY_TEAR",
+   "name": "Bloody Tear",
+   "category": "evolution",
+   "dlc": null
+  },
+  {
+   "index": 190,
+   "key": "HOLY_WAND",
+   "name": "Holy Wand",
+   "category": "evolution",
+   "dlc": null
+  },
+  {
+   "index": 191,
+   "key": "THOUSAND_EDGE",
+   "name": "Thousand Edge",
+   "category": "evolution",
+   "dlc": null
+  },
+  {
+   "index": 192,
+   "key": "DEATH_SPIRAL",
+   "name": "Death Spiral",
+   "category": "evolution",
+   "dlc": null
+  },
+  {
+   "index": 193,
+   "key": "HEAVEN_SWORD",
+   "name": "Heaven Sword",
+   "category": "evolution",
+   "dlc": null
+  },
+  {
+   "index": 194,
+   "key": "UNHOLY_VESPERS",
+   "name": "Unholy Vespers",
+   "category": "evolution",
+   "dlc": null
+  },
+  {
+   "index": 195,
+   "key": "HELLFIRE",
+   "name": "Hellfire",
+   "category": "evolution",
+   "dlc": null
+  },
+  {
+   "index": 196,
+   "key": "SOUL_EATER",
+   "name": "Soul Eater",
+   "category": "evolution",
+   "dlc": null
+  },
+  {
+   "index": 197,
+   "key": "LA_BORRA",
+   "name": "La Borra",
+   "category": "evolution",
+   "dlc": null
+  },
+  {
+   "index": 198,
+   "key": "NO_FUTURE",
+   "name": "NO FUTURE",
+   "category": "evolution",
+   "dlc": null
+  },
+  {
+   "index": 199,
+   "key": "THUNDER_LOOP",
+   "name": "Thunder Loop",
+   "category": "evolution",
+   "dlc": null
+  },
+  {
+   "index": 200,
+   "key": "GORGEOUS_MOON",
+   "name": "Gorgeous Moon",
+   "category": "evolution",
+   "dlc": null
+  },
+  {
+   "index": 201,
+   "key": "VICIOUS_HUNGER",
+   "name": "Vicious Hunger",
+   "category": "evolution",
+   "dlc": null
+  },
+  {
+   "index": 202,
+   "key": "MANNAJJA",
+   "name": "Mannajja",
+   "category": "evolution",
+   "dlc": null
+  },
+  {
+   "index": 203,
+   "key": "VALKYRIE_TURNER",
+   "name": "Valkyrie Turner",
+   "category": "evolution",
+   "dlc": null
+  },
+  {
+   "index": 204,
+   "key": "INFINITE_CORRIDOR",
+   "name": "Infinite Corridor",
+   "category": "evolution",
+   "dlc": null
+  },
+  {
+   "index": 205,
+   "key": "CRIMSON_SHROUD",
+   "name": "Crimson Shroud",
+   "category": "evolution",
+   "dlc": null
+  },
+  {
+   "index": 206,
+   "key": "BI_BRACELET",
+   "name": "Bi-Bracelet",
+   "category": "evolution",
+   "dlc": null
+  },
+  {
+   "index": 207,
+   "key": "TRI_BRACELET",
+   "name": "Tri-Bracelet",
+   "category": "evolution",
+   "dlc": null
+  },
+  {
+   "index": 208,
+   "key": "ASHES_OF_MUSPELL",
+   "name": "Ashes of Muspell",
+   "category": "evolution",
+   "dlc": null
+  },
+  {
+   "index": 209,
+   "key": "ANIMA_OF_MORTACCIO",
+   "name": "Anima of Mortaccio",
+   "category": "evolution",
+   "dlc": null
+  },
+  {
+   "index": 210,
+   "key": "YATTA_DAIKARIN",
+   "name": "Yatta Daikarin",
+   "category": "evolution",
+   "dlc": null
+  },
+  {
+   "index": 211,
+   "key": "CARROZZA",
+   "name": "Carrozza!",
+   "category": "evolution",
+   "dlc": null
+  },
+  {
+   "index": 212,
+   "key": "PROFUSIONE_D_AMORE",
+   "name": "Profusione D'Amore",
+   "category": "evolution",
+   "dlc": null
+  },
+  {
+   "index": 213,
+   "key": "MAZO_FAMILIAR",
+   "name": "Mazo Familiar",
+   "category": "evolution",
+   "dlc": null
+  },
+  {
+   "index": 214,
+   "key": "GUNASTROPHE",
+   "name": "Gunastrophe",
+   "category": "evolution",
+   "dlc": null
+  },
+  {
+   "index": 215,
+   "key": "SPIRIT_DISTURBANCE",
+   "name": "Spirit Disturbance",
+   "category": "evolution",
+   "dlc": null
+  },
+  {
+   "index": 216,
+   "key": "CELESTIAL_VOULGE",
+   "name": "Celestial Voulge",
+   "category": "evolution",
+   "dlc": null
+  },
+  {
+   "index": 217,
+   "key": "MIRACLE_OF_MULTIPLICATION",
+   "name": "Miracle of Multiplication",
+   "category": "evolution",
+   "dlc": null
+  },
+  {
+   "index": 218,
+   "key": "SERAPHIC_CRY",
+   "name": "Seraphic Cry",
+   "category": "evolution",
+   "dlc": null
+  },
+  {
+   "index": 219,
+   "key": "EMBRACE_OF_GAEA",
+   "name": "Embrace of Gaea",
+   "category": "evolution",
+   "dlc": null
+  },
+  {
+   "index": 220,
+   "key": "KYRA_STONES",
+   "name": "Kyra-Stones",
+   "category": "evolution",
+   "dlc": null
+  },
+  {
+   "index": 221,
+   "key": "PHOTONSTORM",
+   "name": "Photonstorm",
+   "category": "evolution",
+   "dlc": null
+  },
+  {
+   "index": 222,
+   "key": "WICKED_RULER",
+   "name": "Wicked Ruler",
+   "category": "evolution",
+   "dlc": null
+  },
+  {
+   "index": 223,
+   "key": "FESTIVE_WINDS",
+   "name": "Festive Winds",
+   "category": "evolution",
+   "dlc": "lm"
+  },
+  {
+   "index": 224,
+   "key": "ARGENT_FLOW",
+   "name": "Argent Flow",
+   "category": "evolution",
+   "dlc": "lm"
+  },
+  {
+   "index": 225,
+   "key": "GODAI_SHUFFLE",
+   "name": "Godai Shuffle",
+   "category": "evolution",
+   "dlc": "lm"
+  },
+  {
+   "index": 226,
+   "key": "ECHO_NIGHT",
+   "name": "Echo Night",
+   "category": "evolution",
+   "dlc": "lm"
+  },
+  {
+   "index": 227,
+   "key": "J_ODORE",
+   "name": "J'Odore",
+   "category": "evolution",
+   "dlc": "lm"
+  },
+  {
+   "index": 228,
+   "key": "MURAMASA",
+   "name": "Muramasa",
+   "category": "evolution",
+   "dlc": "lm"
+  },
+  {
+   "index": 229,
+   "key": "BOO_ROO_BOOLLE",
+   "name": "Boo Roo Boolle",
+   "category": "evolution",
+   "dlc": "lm"
+  },
+  {
+   "index": 230,
+   "key": "CARDINAL_RAIN",
+   "name": "Cardinal Rain",
+   "category": "evolution",
+   "dlc": "bm"
+  },
+  {
+   "index": 231,
+   "key": "BLOODLUST",
+   "name": "Bloodlust",
+   "category": "evolution",
+   "dlc": "bm"
+  },
+  {
+   "index": 232,
+   "key": "DUST_TO_DUST",
+   "name": "Dust to Dust",
+   "category": "evolution",
+   "dlc": "bm"
+  },
+  {
+   "index": 233,
+   "key": "FORBIDDEN_SIREN",
+   "name": "Forbidden Siren",
+   "category": "evolution",
+   "dlc": "bm"
+  },
+  {
+   "index": 234,
+   "key": "DAMNATION",
+   "name": "Damnation",
+   "category": "evolution",
+   "dlc": "bm"
+  },
+  {
+   "index": 235,
+   "key": "LEGIONNAIRE",
+   "name": "Legionnaire",
+   "category": "evolution",
+   "dlc": "tf"
+  },
+  {
+   "index": 236,
+   "key": "MILLIONAIRE",
+   "name": "Millionaire",
+   "category": "evolution",
+   "dlc": "tf"
+  },
+  {
+   "index": 237,
+   "key": "LUMINAIRE",
+   "name": "Luminaire",
+   "category": "evolution",
+   "dlc": "tf"
+  },
+  {
+   "index": 238,
+   "key": "OPHION",
+   "name": "Ophion",
+   "category": "evolution",
+   "dlc": "tf"
+  },
+  {
+   "index": 239,
+   "key": "EMERGENCY_MEETING",
+   "name": "Emergency Meeting",
+   "category": "evolution",
+   "dlc": "em"
+  },
+  {
+   "index": 240,
+   "key": "CROSSED_WIRES",
+   "name": "Crossed Wires",
+   "category": "evolution",
+   "dlc": "em"
+  },
+  {
+   "index": 241,
+   "key": "PARANORMAL_SCAN",
+   "name": "Paranormal Scan",
+   "category": "evolution",
+   "dlc": "em"
+  },
+  {
+   "index": 242,
+   "key": "UNJUST_EJECTION",
+   "name": "Unjust Ejection",
+   "category": "evolution",
+   "dlc": "em"
+  },
+  {
+   "index": 243,
+   "key": "CLEAR_ASTEROIDS",
+   "name": "Clear Asteroids",
+   "category": "evolution",
+   "dlc": "em"
+  },
+  {
+   "index": 244,
+   "key": "IMPOSTONGUE",
+   "name": "Impostongue",
+   "category": "evolution",
+   "dlc": "em"
+  },
+  {
+   "index": 245,
+   "key": "ROCKET_SCIENCE",
+   "name": "Rocket Science",
+   "category": "evolution",
+   "dlc": "em"
+  },
+  {
+   "index": 246,
+   "key": "PROTOTYPE_A",
+   "name": "Prototype A",
+   "category": "evolution",
+   "dlc": "og"
+  },
+  {
+   "index": 247,
+   "key": "PROTOTYPE_B",
+   "name": "Prototype B",
+   "category": "evolution",
+   "dlc": "og"
+  },
+  {
+   "index": 248,
+   "key": "PROTOTYPE_C",
+   "name": "Prototype C",
+   "category": "evolution",
+   "dlc": "og"
+  },
+  {
+   "index": 249,
+   "key": "PRONTO_BEAM",
+   "name": "Pronto Beam",
+   "category": "evolution",
+   "dlc": "og"
+  },
+  {
+   "index": 250,
+   "key": "FIRE_L3GS",
+   "name": "Fire-L3GS",
+   "category": "evolution",
+   "dlc": "og"
+  },
+  {
+   "index": 251,
+   "key": "WAVE_BEAM",
+   "name": "Wave Beam",
+   "category": "evolution",
+   "dlc": "og"
+  },
+  {
+   "index": 252,
+   "key": "MULTISTAGE_MISSILES",
+   "name": "Multistage Missiles",
+   "category": "evolution",
+   "dlc": "og"
+  },
+  {
+   "index": 253,
+   "key": "ATMO_TORPEDO",
+   "name": "Atmo-Torpedo",
+   "category": "evolution",
+   "dlc": "og"
+  },
+  {
+   "index": 254,
+   "key": "BFC2000_AD",
+   "name": "BFC2000-AD",
+   "category": "evolution",
+   "dlc": "og"
+  },
+  {
+   "index": 255,
+   "key": "TIME_WARP",
+   "name": "Time Warp",
+   "category": "evolution",
+   "dlc": "og"
+  },
+  {
+   "index": 256,
+   "key": "BIG_FUZZY_FIST",
+   "name": "Big Fuzzy Fist",
+   "category": "evolution",
+   "dlc": "og"
+  },
+  {
+   "index": 257,
+   "key": "VAMPIRE_KILLER",
+   "name": "Vampire Killer",
+   "category": "evolution",
+   "dlc": "oc"
+  },
+  {
+   "index": 258,
+   "key": "SPIRIT_TORNADO_TIP",
+   "name": "Spirit Tornado Tip",
+   "category": "evolution",
+   "dlc": "oc"
+  },
+  {
+   "index": 259,
+   "key": "CROSS_CRASHER_TIP",
+   "name": "Cross Crasher Tip",
+   "category": "evolution",
+   "dlc": "oc"
+  },
+  {
+   "index": 260,
+   "key": "HYDROSTORMER_TIP",
+   "name": "Hydrostormer Tip",
+   "category": "evolution",
+   "dlc": "oc"
+  },
+  {
+   "index": 261,
+   "key": "CRISSAEGRIM_TIP",
+   "name": "Crissaegrim Tip",
+   "category": "evolution",
+   "dlc": "oc"
+  },
+  {
+   "index": 262,
+   "key": "MORMEGIL_TIP",
+   "name": "Mormegil Tip",
+   "category": "evolution",
+   "dlc": "oc"
+  },
+  {
+   "index": 263,
+   "key": "DAYBREAKER_TIP",
+   "name": "Daybreaker Tip",
+   "category": "evolution",
+   "dlc": "oc"
+  },
+  {
+   "index": 264,
+   "key": "AURABLASTER_TIP",
+   "name": "Aurablaster Tip",
+   "category": "evolution",
+   "dlc": "oc"
+  },
+  {
+   "index": 265,
+   "key": "YAGYU_SHURIKEN",
+   "name": "Yagyu Shuriken",
+   "category": "evolution",
+   "dlc": "oc"
+  },
+  {
+   "index": 266,
+   "key": "BWAKA_KNIFE",
+   "name": "Bwaka Knife",
+   "category": "evolution",
+   "dlc": "oc"
+  },
+  {
+   "index": 267,
+   "key": "LONG_INUS",
+   "name": "Long Inus",
+   "category": "evolution",
+   "dlc": "oc"
+  },
+  {
+   "index": 268,
+   "key": "STELLAR_BLADE",
+   "name": "Stellar Blade",
+   "category": "evolution",
+   "dlc": "oc"
+  },
+  {
+   "index": 269,
+   "key": "WRECKING_BALL",
+   "name": "Wrecking Ball",
+   "category": "evolution",
+   "dlc": "oc"
+  },
+  {
+   "index": 270,
+   "key": "JEWEL_GUN",
+   "name": "Jewel Gun",
+   "category": "evolution",
+   "dlc": "oc"
+  },
+  {
+   "index": 271,
+   "key": "THE_RPG",
+   "name": "The RPG",
+   "category": "evolution",
+   "dlc": "oc"
+  },
+  {
+   "index": 272,
+   "key": "MEAL_TICKET",
+   "name": "Meal Ticket",
+   "category": "evolution",
+   "dlc": "oc"
+  },
+  {
+   "index": 273,
+   "key": "SALAMENDER",
+   "name": "Salamender",
+   "category": "evolution",
+   "dlc": "oc"
+  },
+  {
+   "index": 274,
+   "key": "COCYTUS",
+   "name": "Cocytus",
+   "category": "evolution",
+   "dlc": "oc"
+  },
+  {
+   "index": 275,
+   "key": "PNEUMA_TEMPESTAS",
+   "name": "Pneuma Tempestas",
+   "category": "evolution",
+   "dlc": "oc"
+  },
+  {
+   "index": 276,
+   "key": "GEMMA_TORPOR",
+   "name": "Gemma Torpor",
+   "category": "evolution",
+   "dlc": "oc"
+  },
+  {
+   "index": 277,
+   "key": "TENEBRIS_TONITRUS",
+   "name": "Tenebris Tonitrus",
+   "category": "evolution",
+   "dlc": "oc"
+  },
+  {
+   "index": 278,
+   "key": "KEREMET_MORBUS",
+   "name": "Keremet Morbus",
+   "category": "evolution",
+   "dlc": "oc"
+  },
+  {
+   "index": 279,
+   "key": "NIGHTMARE",
+   "name": "Nightmare",
+   "category": "evolution",
+   "dlc": "oc"
+  },
+  {
+   "index": 280,
+   "key": "SANCTUARY",
+   "name": "Sanctuary",
+   "category": "evolution",
+   "dlc": "oc"
+  },
+  {
+   "index": 281,
+   "key": "STAMAZZA",
+   "name": "Stamazza",
+   "category": "evolution",
+   "dlc": "oc"
+  },
+  {
+   "index": 282,
+   "key": "MOON_ROD",
+   "name": "Moon Rod",
+   "category": "evolution",
+   "dlc": "oc"
+  },
+  {
+   "index": 283,
+   "key": "THUNDERBOLT_SPEAR",
+   "name": "Thunderbolt Spear",
+   "category": "evolution",
+   "dlc": "oc"
+  },
+  {
+   "index": 284,
+   "key": "GUNGNIR_SOURIS",
+   "name": "Gungnir-Souris",
+   "category": "evolution",
+   "dlc": "oc"
+  },
+  {
+   "index": 285,
+   "key": "DARK_IRON_SHIELD",
+   "name": "Dark Iron Shield",
+   "category": "evolution",
+   "dlc": "oc"
+  },
+  {
+   "index": 286,
+   "key": "SACRED_BEASTS_TOWER_SHIELD",
+   "name": "Sacred Beasts Tower Shield",
+   "category": "evolution",
+   "dlc": "oc"
+  },
+  {
+   "index": 287,
+   "key": "RUNE_SWORD",
+   "name": "Rune Sword",
+   "category": "evolution",
+   "dlc": "oc"
+  },
+  {
+   "index": 288,
+   "key": "ALUCARD_SWORDS",
+   "name": "Alucard Swords",
+   "category": "evolution",
+   "dlc": "oc"
+  },
+  {
+   "index": 289,
+   "key": "VOL_CONFODERE",
+   "name": "Vol Confodere",
+   "category": "evolution",
+   "dlc": "oc"
+  },
+  {
+   "index": 290,
+   "key": "MELIO_CONFODERE",
+   "name": "Melio Confodere",
+   "category": "evolution",
+   "dlc": "oc"
+  },
+  {
+   "index": 291,
+   "key": "NITESCO",
+   "name": "Nitesco",
+   "category": "evolution",
+   "dlc": "oc"
+  },
+  {
+   "index": 292,
+   "key": "ACERBATUS",
+   "name": "Acerbatus",
+   "category": "evolution",
+   "dlc": "oc"
+  },
+  {
+   "index": 293,
+   "key": "RAPIDUS_FIO",
+   "name": "Rapidus Fio",
+   "category": "evolution",
+   "dlc": "oc"
+  },
+  {
+   "index": 294,
+   "key": "VOL_LUMINATIO",
+   "name": "Vol Luminatio",
+   "category": "evolution",
+   "dlc": "oc"
+  },
+  {
+   "index": 295,
+   "key": "VOL_UMBRA",
+   "name": "Vol Umbra",
+   "category": "evolution",
+   "dlc": "oc"
+  },
+  {
+   "index": 296,
+   "key": "CLAIMH_SOLAIS",
+   "name": "Claimh Solais",
+   "category": "evolution",
+   "dlc": "oc"
+  },
+  {
+   "index": 297,
+   "key": "DRESS_SWORD",
+   "name": "Dress Sword",
+   "category": "evolution",
+   "dlc": "ed"
+  },
+  {
+   "index": 298,
+   "key": "ESPADA_ROPERA",
+   "name": "Espada Ropera",
+   "category": "evolution",
+   "dlc": "ed"
+  },
+  {
+   "index": 299,
+   "key": "LORDSTAR",
+   "name": "Lordstar",
+   "category": "evolution",
+   "dlc": "ed"
+  },
+  {
+   "index": 300,
+   "key": "DAYBLADE",
+   "name": "Dayblade",
+   "category": "evolution",
+   "dlc": "ed"
+  },
+  {
+   "index": 301,
+   "key": "PURSUANT_BLADES",
+   "name": "Pursuant Blades",
+   "category": "evolution",
+   "dlc": "ed"
+  },
+  {
+   "index": 302,
+   "key": "ZWEIHANDER",
+   "name": "Zweihander",
+   "category": "evolution",
+   "dlc": "ed"
+  },
+  {
+   "index": 303,
+   "key": "GALATYN",
+   "name": "Galatyn",
+   "category": "evolution",
+   "dlc": "ed"
+  },
+  {
+   "index": 304,
+   "key": "PRESSURE_POINT",
+   "name": "Pressure Point",
+   "category": "evolution",
+   "dlc": "ed"
+  },
+  {
+   "index": 305,
+   "key": "GILDED_HAND",
+   "name": "Gilded Hand",
+   "category": "evolution",
+   "dlc": "ed"
+  },
+  {
+   "index": 306,
+   "key": "TRIANGLE_KICK",
+   "name": "Triangle Kick",
+   "category": "evolution",
+   "dlc": "ed"
+  },
+  {
+   "index": 307,
+   "key": "HECATON_MACHINE_GUN",
+   "name": "Hecaton Machine Gun",
+   "category": "evolution",
+   "dlc": "ed"
+  },
+  {
+   "index": 308,
+   "key": "DIVERGENCE",
+   "name": "Divergence",
+   "category": "evolution",
+   "dlc": "ed"
+  },
+  {
+   "index": 309,
+   "key": "HYDRA_CANNON",
+   "name": "Hydra Cannon",
+   "category": "evolution",
+   "dlc": "ed"
+  },
+  {
+   "index": 310,
+   "key": "HYPERION_BAZOOKA",
+   "name": "Hyperion Bazooka",
+   "category": "evolution",
+   "dlc": "ed"
+  },
+  {
+   "index": 311,
+   "key": "PENDRAGON",
+   "name": "Pendragon",
+   "category": "evolution",
+   "dlc": "ed"
+  },
+  {
+   "index": 312,
+   "key": "JETSTREAM",
+   "name": "Jetstream",
+   "category": "evolution",
+   "dlc": "ed"
+  },
+  {
+   "index": 313,
+   "key": "GEKKABIJIN",
+   "name": "Gekkabijin",
+   "category": "evolution",
+   "dlc": "ed"
+  },
+  {
+   "index": 314,
+   "key": "FALCONWIND",
+   "name": "Falconwind",
+   "category": "evolution",
+   "dlc": "ed"
+  },
+  {
+   "index": 315,
+   "key": "BLOOD_CHALICE",
+   "name": "Blood Chalice",
+   "category": "evolution",
+   "dlc": "ed"
+  },
+  {
+   "index": 316,
+   "key": "FEATHER_SPEAR",
+   "name": "Feather Spear",
+   "category": "evolution",
+   "dlc": "ed"
+  },
+  {
+   "index": 317,
+   "key": "LOHENGRIN",
+   "name": "Lohengrin",
+   "category": "evolution",
+   "dlc": "ed"
+  },
+  {
+   "index": 318,
+   "key": "RINGS_OF_CALAMITY",
+   "name": "Rings of Calamity",
+   "category": "evolution",
+   "dlc": "ed"
+  },
+  {
+   "index": 319,
+   "key": "EMERALD_WAVE",
+   "name": "Emerald Wave",
+   "category": "evolution",
+   "dlc": "ed"
+  },
+  {
+   "index": 320,
+   "key": "NANEINFERNO",
+   "name": "NaneInferno",
+   "category": "evolution",
+   "dlc": "ac"
+  },
+  {
+   "index": 321,
+   "key": "CAVENDISH",
+   "name": "Cavendish",
+   "category": "evolution",
+   "dlc": "ac"
+  },
+  {
+   "index": 322,
+   "key": "ROYAL_FLUSH",
+   "name": "Royal Flush",
+   "category": "evolution",
+   "dlc": "ac"
+  },
+  {
+   "index": 323,
+   "key": "NEGATIVE_SPACE",
+   "name": "Negative Space",
+   "category": "evolution",
+   "dlc": "ac"
+  },
+  {
+   "index": 324,
+   "key": "VANDALIER",
+   "name": "Vandalier",
+   "category": "union",
+   "dlc": null
+  },
+  {
+   "index": 325,
+   "key": "PHIERAGGI",
+   "name": "Phieraggi",
+   "category": "union",
+   "dlc": null
+  },
+  {
+   "index": 326,
+   "key": "FUWALAFUWALOO",
+   "name": "Fuwalafuwaloo",
+   "category": "union",
+   "dlc": null
+  },
+  {
+   "index": 327,
+   "key": "LUNARFLIGHT",
+   "name": "LunarFlight",
+   "category": "union",
+   "dlc": "lm"
+  },
+  {
+   "index": 328,
+   "key": "ROAD_TO_HEAVEN",
+   "name": "Road to Heaven",
+   "category": "union",
+   "dlc": "bm"
+  },
+  {
+   "index": 329,
+   "key": "FIRESTALL",
+   "name": "FireStall",
+   "category": "union",
+   "dlc": "bm"
+  },
+  {
+   "index": 330,
+   "key": "SHIMMERING_SANDS",
+   "name": "Shimmering Sands",
+   "category": "union",
+   "dlc": "bm"
+  },
+  {
+   "index": 331,
+   "key": "SPELLSTROM",
+   "name": "SpellStrom",
+   "category": "union",
+   "dlc": "tf"
+  },
+  {
+   "index": 332,
+   "key": "TRINUM_CUSTODEM",
+   "name": "Trinum Custodem",
+   "category": "union",
+   "dlc": "oc"
+  },
+  {
+   "index": 333,
+   "key": "POWER_OF_SIRE",
+   "name": "Power of Sire",
+   "category": "union",
+   "dlc": "oc"
+  },
+  {
+   "index": 334,
+   "key": "MILLION_CUT",
+   "name": "Million Cut",
+   "category": "union",
+   "dlc": "oc"
+  },
+  {
+   "index": 335,
+   "key": "NINTH_CIRCLE",
+   "name": "Ninth Circle",
+   "category": "union",
+   "dlc": "oc"
+  },
+  {
+   "index": 336,
+   "key": "DIES_IRAE",
+   "name": "Dies Irae",
+   "category": "union",
+   "dlc": "oc"
+  },
+  {
+   "index": 337,
+   "key": "KARDIA_PHLEGETON",
+   "name": "Kardía Phlegeton",
+   "category": "union",
+   "dlc": "oc"
+  },
+  {
+   "index": 338,
+   "key": "LAPISTE_TEPISTO",
+   "name": "Lapiste Tepisto",
+   "category": "union",
+   "dlc": "oc"
+  },
+  {
+   "index": 339,
+   "key": "DARKNESS_ILLUSION",
+   "name": "Darkness Illusion",
+   "category": "union",
+   "dlc": "oc"
+  },
+  {
+   "index": 340,
+   "key": "CARNAGE_HEART",
+   "name": "Carnage Heart",
+   "category": "union",
+   "dlc": "oc"
+  },
+  {
+   "index": 341,
+   "key": "HYDRO_PUMP_CLIMAX",
+   "name": "Hydro Pump Climax",
+   "category": "union",
+   "dlc": "oc"
+  },
+  {
+   "index": 342,
+   "key": "ARCH_ANGLE",
+   "name": "Arch Angle",
+   "category": "union",
+   "dlc": "oc"
+  },
+  {
+   "index": 343,
+   "key": "SPIRIT_OF_LIGHT",
+   "name": "Spirit of Light",
+   "category": "union",
+   "dlc": "oc"
+  },
+  {
+   "index": 344,
+   "key": "POWER_OF_LIRE",
+   "name": "Power of Lire",
+   "category": "union",
+   "dlc": "oc"
+  },
+  {
+   "index": 345,
+   "key": "LEGACY_OF_DEATH_SOUL_RIVER",
+   "name": "Legacy of Death: Soul River",
+   "category": "union",
+   "dlc": "oc"
+  },
+  {
+   "index": 346,
+   "key": "VJAYA_SISTERS",
+   "name": "Vjaya Sisters",
+   "category": "union",
+   "dlc": "oc"
+  },
+  {
+   "index": 347,
+   "key": "VENUS_CRESCENT",
+   "name": "Venus Crescent",
+   "category": "union",
+   "dlc": "oc"
+  },
+  {
+   "index": 348,
+   "key": "DARK_FROGAMORPHOSIS",
+   "name": "Dark Frogamorphosis",
+   "category": "union",
+   "dlc": "oc"
+  },
+  {
+   "index": 349,
+   "key": "CLOCK_TOWER",
+   "name": "Clock Tower",
+   "category": "union",
+   "dlc": "oc"
+  },
+  {
+   "index": 350,
+   "key": "SUPER_CANDYBOX_II_TURBO",
+   "name": "Super Candybox II Turbo",
+   "category": "gift",
+   "dlc": null
+  },
+  {
+   "index": 351,
+   "key": "SOLE_SOLUTION",
+   "name": "Sole Solution",
+   "category": "gift",
+   "dlc": null
+  },
+  {
+   "index": 352,
+   "key": "ALUCARD_SHIELD",
+   "name": "Alucard Shield",
+   "category": "gift",
+   "dlc": "oc"
+  },
+  {
+   "index": 353,
+   "key": "UNIVERSITAS",
+   "name": "Universitas",
+   "category": "gift",
+   "dlc": "oc"
+  },
+  {
+   "index": 354,
+   "key": "CYGNUS",
+   "name": "Cygnus",
+   "category": "counterpart",
+   "dlc": null
+  },
+  {
+   "index": 355,
+   "key": "ZHAR_PTYTSIA",
+   "name": "Zhar Ptytsia",
+   "category": "counterpart",
+   "dlc": null
+  },
+  {
+   "index": 356,
+   "key": "RED_MUSCLE",
+   "name": "Red Muscle",
+   "category": "counterpart",
+   "dlc": null
+  },
+  {
+   "index": 357,
+   "key": "TWICE_UPON_A_TIME",
+   "name": "Twice Upon a Time",
+   "category": "counterpart",
+   "dlc": null
+  },
+  {
+   "index": 358,
+   "key": "FLOCK_DESTROYER",
+   "name": "Flock Destroyer",
+   "category": "counterpart",
+   "dlc": null
+  },
+  {
+   "index": 359,
+   "key": "HORSE_CARTRIDGE",
+   "name": "Horse Cartridge",
+   "category": "counterpart",
+   "dlc": null
+  },
+  {
+   "index": 360,
+   "key": "LEVELIN_EH",
+   "name": "Levelin'Eh",
+   "category": "counterpart",
+   "dlc": null
+  },
+  {
+   "index": 361,
+   "key": "SILVER_SLIVER",
+   "name": "Silver Sliver",
+   "category": "counterpart",
+   "dlc": "tf"
+  },
+  {
+   "index": 362,
+   "key": "PARTY_POOPER",
+   "name": "Party Pooper",
+   "category": "counterpart",
+   "dlc": "tf"
+  },
+  {
+   "index": 363,
+   "key": "SILVER_TONGUE",
+   "name": "Silver Tongue",
+   "category": "counterpart",
+   "dlc": "em"
+  },
+  {
+   "index": 364,
+   "key": "PRISM_DAMSEL",
+   "name": "Prism Damsel",
+   "category": "counterpart",
+   "dlc": "og"
+  },
+  {
+   "index": 365,
+   "key": "SPECULO_GLOBUS",
+   "name": "Speculo Globus",
+   "category": "counterpart",
+   "dlc": "oc"
+  },
+  {
+   "index": 366,
+   "key": "SPECULO_RAGING_FIRE",
+   "name": "Speculo Raging Fire",
+   "category": "counterpart",
+   "dlc": "oc"
+  },
+  {
+   "index": 367,
+   "key": "SPECULO_ICE_FANG",
+   "name": "Speculo Ice Fang",
+   "category": "counterpart",
+   "dlc": "oc"
+  },
+  {
+   "index": 368,
+   "key": "SPECULO_ROCK_RIOT",
+   "name": "Speculo Rock Riot",
+   "category": "counterpart",
+   "dlc": "oc"
+  },
+  {
+   "index": 369,
+   "key": "SPECULO_GALE_FORCE",
+   "name": "Speculo Gale Force",
+   "category": "counterpart",
+   "dlc": "oc"
+  },
+  {
+   "index": 370,
+   "key": "SPECULO_FULGUR",
+   "name": "Speculo Fulgur",
+   "category": "counterpart",
+   "dlc": "oc"
+  },
+  {
+   "index": 371,
+   "key": "SPECULO_KEREMET_BUBBLES",
+   "name": "Speculo Keremet Bubbles",
+   "category": "counterpart",
+   "dlc": "oc"
+  },
+  {
+   "index": 372,
+   "key": "SPECULO_HEX",
+   "name": "Speculo Hex",
+   "category": "counterpart",
+   "dlc": "oc"
+  },
+  {
+   "index": 373,
+   "key": "SPECULO_REFECTIO",
+   "name": "Speculo Refectio",
+   "category": "counterpart",
+   "dlc": "oc"
+  },
+  {
+   "index": 374,
+   "key": "SPECULO_ANURA",
+   "name": "Speculo Anura",
+   "category": "counterpart",
+   "dlc": "oc"
+  },
+  {
+   "index": 375,
+   "key": "NDUJA_FRITTA_TANTO",
+   "name": "Nduja Fritta Tanto",
+   "category": "special_weapon",
+   "dlc": null
+  },
+  {
+   "index": 376,
+   "key": "SORBETTO",
+   "name": "Sorbetto",
+   "category": "special_weapon",
+   "dlc": null
+  },
+  {
+   "index": 377,
+   "key": "DAIRY_CART",
+   "name": "Dairy Cart",
+   "category": "special_weapon",
+   "dlc": null
+  },
+  {
+   "index": 378,
+   "key": "TAKE_US_AWAY",
+   "name": "Take Us Away",
+   "category": "special_weapon",
+   "dlc": null
+  },
+  {
+   "index": 379,
+   "key": "SARABANDE_OF_HEALING",
+   "name": "Sarabande of Healing",
+   "category": "special_weapon",
+   "dlc": null
+  },
+  {
+   "index": 380,
+   "key": "STAINED_GLASS",
+   "name": "Stained Glass",
+   "category": "special_weapon",
+   "dlc": null
+  },
+  {
+   "index": 381,
+   "key": "GAME_KILLER",
+   "name": "Game Killer",
+   "category": "special_weapon",
+   "dlc": null
+  },
+  {
+   "index": 382,
+   "key": "HEART_OF_FIRE",
+   "name": "Heart of Fire",
+   "category": "special_weapon",
+   "dlc": null
+  },
+  {
+   "index": 383,
+   "key": "OUT_OF_BOUNDS",
+   "name": "Out of Bounds",
+   "category": "special_weapon",
+   "dlc": null
+  },
+  {
+   "index": 384,
+   "key": "DIVINE_BLOODLINE",
+   "name": "Divine Bloodline",
+   "category": "special_weapon",
+   "dlc": null
+  },
+  {
+   "index": 385,
+   "key": "BLOOD_ASTRONOMIA",
+   "name": "Blood Astronomia",
+   "category": "special_weapon",
+   "dlc": null
+  },
+  {
+   "index": 386,
+   "key": "WANDERING_THE_JET_BLACK",
+   "name": "Wandering the Jet Black",
+   "category": "special_weapon",
+   "dlc": null
+  },
+  {
+   "index": 387,
+   "key": "INSATIABLE",
+   "name": "Insatiable",
+   "category": "special_weapon",
+   "dlc": null
+  },
+  {
+   "index": 388,
+   "key": "ACQUAZZONE",
+   "name": "Acquazzone",
+   "category": "special_weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 389,
+   "key": "SHAFT_ORB",
+   "name": "Shaft Orb",
+   "category": "special_weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 390,
+   "key": "BURNING_ALCARDE",
+   "name": "Burning Alcarde",
+   "category": "special_weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 391,
+   "key": "DEATH_HAND",
+   "name": "Death Hand",
+   "category": "special_weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 392,
+   "key": "HAND_OF_VLAD",
+   "name": "Hand of Vlad",
+   "category": "special_weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 393,
+   "key": "RULER_SWORD_BODY",
+   "name": "Ruler Sword Body",
+   "category": "special_weapon",
+   "dlc": "oc"
+  },
+  {
+   "index": 394,
+   "key": "BANANASTROPHE",
+   "name": "Bananastrophe",
+   "category": "special_weapon",
+   "dlc": "ac"
+  },
+  {
+   "index": 395,
+   "key": "SOSSOLDI",
+   "name": "Sossoldi",
+   "category": "special_weapon",
+   "dlc": "ac"
+  },
+  {
+   "index": 396,
+   "key": "SPINACH",
+   "name": "Spinach",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 397,
+   "key": "ARMOR",
+   "name": "Armor",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 398,
+   "key": "HOLLOW_HEART",
+   "name": "Hollow Heart",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 399,
+   "key": "PUMMAROLA",
+   "name": "Pummarola",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 400,
+   "key": "EMPTY_TOME",
+   "name": "Empty Tome",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 401,
+   "key": "CANDELABRADOR",
+   "name": "Candelabrador",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 402,
+   "key": "BRACER",
+   "name": "Bracer",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 403,
+   "key": "SPELLBINDER",
+   "name": "Spellbinder",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 404,
+   "key": "DUPLICATOR",
+   "name": "Duplicator",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 405,
+   "key": "WINGS",
+   "name": "Wings",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 406,
+   "key": "ATTRACTORB",
+   "name": "Attractorb",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 407,
+   "key": "CLOVER",
+   "name": "Clover",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 408,
+   "key": "CROWN",
+   "name": "Crown",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 409,
+   "key": "STONE_MASK",
+   "name": "Stone Mask",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 410,
+   "key": "SKULL_O_MANIAC",
+   "name": "Skull O'Maniac",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 411,
+   "key": "TIRAJISU",
+   "name": "Tirajisú",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 412,
+   "key": "TORRONA_S_BOX",
+   "name": "Torrona's Box",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 413,
+   "key": "PARM_AEGIS",
+   "name": "Parm Aegis",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 414,
+   "key": "KAROMA_S_MANA",
+   "name": "Karoma's Mana",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 415,
+   "key": "SILVER_RING",
+   "name": "Silver Ring",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 416,
+   "key": "GOLD_RING",
+   "name": "Gold Ring",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 417,
+   "key": "METAGLIO_LEFT",
+   "name": "Metaglio Left",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 418,
+   "key": "METAGLIO_RIGHT",
+   "name": "Metaglio Right",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 419,
+   "key": "PEARL_MAGATAMA",
+   "name": "Pearl magatama",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 420,
+   "key": "VELVET_DODECAHEDRON",
+   "name": "Velvet Dodecahedron",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 421,
+   "key": "ACADEMY_BADGE",
+   "name": "Academy Badge",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 422,
+   "key": "MINI_CREWMATE",
+   "name": "Mini Crewmate",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 423,
+   "key": "MINI_ENGINEER",
+   "name": "Mini Engineer",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 424,
+   "key": "MINI_GHOST",
+   "name": "Mini Ghost",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 425,
+   "key": "MINI_SHAPESHIFTER",
+   "name": "Mini Shapeshifter",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 426,
+   "key": "MINI_GUARDIAN",
+   "name": "Mini Guardian",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 427,
+   "key": "MINI_IMPOSTOR",
+   "name": "Mini Impostor",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 428,
+   "key": "MINI_SCIENTIST",
+   "name": "Mini Scientist",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 429,
+   "key": "MINI_HORSE",
+   "name": "Mini Horse",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 430,
+   "key": "WEAPON_POWER_UP",
+   "name": "Weapon Power-Up",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 431,
+   "key": "UKOBACK",
+   "name": "Ukoback",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 432,
+   "key": "BITTERFLY",
+   "name": "Bitterfly",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 433,
+   "key": "IMP",
+   "name": "Imp",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 434,
+   "key": "ALLEGED_GHOST",
+   "name": "Alleged Ghost",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 435,
+   "key": "WOOD_ROD",
+   "name": "Wood Rod",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 436,
+   "key": "FAERIE",
+   "name": "Faerie",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 437,
+   "key": "PUMPKIN",
+   "name": "Pumpkin",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 438,
+   "key": "SACRED_CARDINAL",
+   "name": "Sacred Cardinal",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 439,
+   "key": "SACRED_DRAGON",
+   "name": "Sacred Dragon",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 440,
+   "key": "SACRED_TIGER",
+   "name": "Sacred Tiger",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 441,
+   "key": "SACRED_TURTLE",
+   "name": "Sacred Turtle",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 442,
+   "key": "OUTER_SABOTEUR",
+   "name": "Outer Saboteur",
+   "category": "passive",
+   "dlc": null
+  },
+  {
+   "index": 443,
+   "key": "FLOOR_CHICKEN",
+   "name": "Floor Chicken",
+   "category": "pickup",
+   "dlc": null
+  },
+  {
+   "index": 444,
+   "key": "GOLD_COIN",
+   "name": "Gold Coin",
+   "category": "pickup",
+   "dlc": null
+  },
+  {
+   "index": 445,
+   "key": "BIG_COIN_BAG",
+   "name": "Big Coin Bag",
+   "category": "pickup",
+   "dlc": null
+  }
+ ]
+}
