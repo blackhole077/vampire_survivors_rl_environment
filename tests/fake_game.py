@@ -2,9 +2,11 @@
 
 install_fake_game(monkeypatch) swaps every X11 / mss touchpoint the env uses
 for in-memory fakes and returns a FakeScreen whose frames are deterministic,
-so observation bytes are reproducible across runs.
+so observation bytes are reproducible across runs.  The env's clock is a
+FakeClock (screen.clock), so step pacing costs no real time.
 """
 
+import time
 from types import SimpleNamespace
 
 import numpy as np
@@ -33,12 +35,28 @@ def synthetic_frame(i: int) -> np.ndarray:
     return frame.astype(np.uint8)
 
 
+class FakeClock:
+    """Stands in for time.monotonic / time.sleep: sleeping advances the clock instantly."""
+
+    def __init__(self) -> None:
+        self.t = 1000.0
+        self.sleeps: list[float] = []
+
+    def monotonic(self) -> float:
+        return self.t
+
+    def sleep(self, s: float) -> None:
+        self.sleeps.append(s)
+        self.t += s
+
+
 class FakeScreen:
     """Stands in for mss + capture_game_window; serves synthetic_frame(0), (1), ..."""
 
     def __init__(self) -> None:
         self.n_grabs = 0
         self.closed = False
+        self.clock = FakeClock()
 
     def capture(self, sct, window) -> np.ndarray:
         frame = synthetic_frame(self.n_grabs)
@@ -62,4 +80,9 @@ def install_fake_game(monkeypatch) -> FakeScreen:
     monkeypatch.setattr(env_module, "capture_game_window", screen.capture)
     monkeypatch.setattr(env_module, "focus_window", lambda d, xid: None)
     monkeypatch.setattr(env_module, "send_input_to_game", lambda d, rel, press: None)
+    monkeypatch.setattr(
+        env_module,
+        "time",
+        SimpleNamespace(monotonic=screen.clock.monotonic, sleep=screen.clock.sleep, perf_counter=time.perf_counter),
+    )
     return screen

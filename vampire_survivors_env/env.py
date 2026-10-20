@@ -57,13 +57,20 @@ class VampireSurvivorsEnv(gym.Env):
         action_repeat: int = 4,
         resolution: tuple[int, int] = (100, 100),
         reward_scale: float = 1.0,
+        game_fps: float = 60.0,
         feature_provider: Union[None, str, object] = None,
         feature_provider_kwargs: Optional[dict[str, Any]] = None,
     ) -> None:
         """Set up observation/action spaces and connect to the game window.
 
         frame_stack consecutive frames are stacked into a single observation.
-        action_repeat holds each action for that many frames before returning.
+        action_repeat holds each action for that many game frames before
+        returning: steps are paced to action_repeat / game_fps seconds (15 per
+        second at the defaults).  The game runs in real time and can't be
+        stepped, so pacing is by wall clock on a fixed schedule; time the
+        caller spends between steps counts toward the next one.  A step that
+        starts more than a whole step late resets the schedule and is counted
+        in self.late_steps.
         resolution is the (H, W) to which captured frames are downsampled.
         reward_scale multiplies all reward signals.
         feature_provider optionally adds structured game-state features (see
@@ -79,6 +86,9 @@ class VampireSurvivorsEnv(gym.Env):
         self.frame_stack = frame_stack
         self.action_repeat = action_repeat
         self.reward_scale = reward_scale
+        self.game_fps = game_fps
+        self.late_steps: int = 0
+        self._step_due: Optional[float] = None  # monotonic time the current step ends
 
         self._ewmh_root = EwmhRoot()
         self._display: Optional[Display] = self._ewmh_root.display
@@ -145,6 +155,7 @@ class VampireSurvivorsEnv(gym.Env):
         self._gameplay_started = False
         self._terminal_reward = None
         self._phase = "playing"
+        self._step_due = None
         if self._provider is not None and not self._provider_attached:
             self._attach_provider()
         focus_window(self._display, self._window.xid)
@@ -158,7 +169,7 @@ class VampireSurvivorsEnv(gym.Env):
     def step(
         self, action: int
     ) -> tuple[Dict, SupportsFloat, bool, bool, dict[str, Any]]:
-        """Send action to the game, advance one frame, return transition.
+        """Send action to the game, hold it for action_repeat frames, return transition.
 
         During normal play the action selects a cardinal/diagonal direction or
         stay.  During the gameover animation (before the results screen appears)
@@ -173,6 +184,7 @@ class VampireSurvivorsEnv(gym.Env):
         elif self._phase != "results":
             self._send_movement_action(action)
 
+        self._wait_for_step_end()
         obs = self._get_obs()  # updates self._phase
         truncated = False
 
@@ -193,6 +205,18 @@ class VampireSurvivorsEnv(gym.Env):
         if self._terminal_reward is not None:
             info["survived_seconds"] = round(self._terminal_reward / self.reward_scale)
         return obs, reward, terminated, truncated, info
+
+    def _wait_for_step_end(self) -> None:
+        """Sleep until this step's slot on the action_repeat / game_fps schedule ends."""
+        period = self.action_repeat / self.game_fps
+        now = time.monotonic()
+        if self._step_due is None or now - self._step_due > period:
+            if self._step_due is not None:
+                self.late_steps += 1
+            self._step_due = now + period
+        else:
+            self._step_due += period
+        time.sleep(max(0.0, self._step_due - now))
 
     def render(self) -> Optional[np.ndarray]:
         """Return the latest raw (unprocessed) game frame for human or rgb_array mode."""

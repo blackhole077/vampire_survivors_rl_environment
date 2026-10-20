@@ -14,6 +14,9 @@ import pytest
 from vampire_survivors_env.features.loader import load_provider
 from vampire_survivors_env.features.mock import MockProvider, synthetic_trace
 from vampire_survivors_env.features.spec import (
+    ENEMY_GRID_CAP,
+    ENEMY_GRID_EXTENT,
+    ENEMY_GRID_SIZE,
     MAX_ITEM_LEVEL,
     SPEC_VERSION,
     FeatureProvider,
@@ -24,6 +27,7 @@ from vampire_survivors_env.features.spec import (
     build_space,
     check_compatible,
     core_space,
+    encode_enemy_grid,
     encode_scalars,
     encode_slots,
     frame_problems,
@@ -238,3 +242,44 @@ def test_game_state_carries_optional_keys():
     enemies = np.zeros(space["enemies"].shape, dtype=np.float32)
     frame = GameState(Mode.PLAYING, 0.0, 100.0, 100.0, 1, 0.0, extras={"enemies": enemies}).encode()
     assert frame_problems(frame, space) == []
+
+
+# ---------------------------------------------------------------------------
+# enemy_grid
+# ---------------------------------------------------------------------------
+
+
+def test_enemy_grid_puts_the_player_at_the_centre_with_up_at_row_0():
+    cell = 2 * ENEMY_GRID_EXTENT / ENEMY_GRID_SIZE
+    c = ENEMY_GRID_SIZE // 2
+    grid = encode_enemy_grid([(0.1 * cell, 0.1 * cell), (0.5 * cell, 3.5 * cell), (-2.5 * cell, -0.5 * cell)])
+    assert grid.shape == (ENEMY_GRID_SIZE, ENEMY_GRID_SIZE) and grid.dtype == np.float32
+    hits = {tuple(rc) for rc in np.argwhere(grid > 0).tolist()}
+    assert hits == {(c - 1, c), (c - 4, c), (c, c - 3)}  # just above-right of centre; 3 rows up; 3 columns left
+
+
+def test_enemy_grid_counts_are_log_scaled_and_capped():
+    one = encode_enemy_grid([(0.0, 0.0)]).max()
+    two = encode_enemy_grid([(0.0, 0.0)] * 2).max()
+    assert 0 < one < two < 1
+    assert encode_enemy_grid([(0.0, 0.0)] * ENEMY_GRID_CAP).max() == pytest.approx(1.0)
+    assert encode_enemy_grid([(0.0, 0.0)] * (10 * ENEMY_GRID_CAP)).max() == 1.0
+
+
+def test_enemy_grid_drops_enemies_outside_and_accepts_none():
+    e = ENEMY_GRID_EXTENT
+    assert not encode_enemy_grid([(e, 0.0), (0.0, -e - 0.01), (-e - 1, 0.0)]).any()
+    assert encode_enemy_grid([(-e, e - 1e-6)])[0, 0] > 0  # the top-left corner is inside
+    assert not encode_enemy_grid(np.zeros((0, 2))).any()
+
+
+def test_enemy_grid_is_a_registered_optional_key():
+    space = build_space(("enemy_grid",))
+    frame = GameState(Mode.PLAYING, 0.0, 100.0, 100.0, 1, 0.0,
+                      extras={"enemy_grid": encode_enemy_grid([(0.3, -0.2)] * 50)}).encode()
+    assert frame_problems(frame, space) == []
+    assert not null_frame(space)["enemy_grid"].any()
+    provider = MockProvider(optional_keys=("enemy_grid",))
+    frames = [provider.read() for _ in range(50)]
+    assert all(frame_problems(f, provider.observation_space()) == [] for f in frames if f is not None)
+    assert any(f["enemy_grid"].any() for f in frames if f is not None)

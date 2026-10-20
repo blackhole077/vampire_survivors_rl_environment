@@ -26,6 +26,7 @@ from vampire_survivors_env.features.spec import (
     ItemSlot,
     Mode,
     build_space,
+    encode_enemy_grid,
 )
 from vampire_survivors_env.features.vocab import load_vocab
 
@@ -112,6 +113,9 @@ def synthetic_trace(
             enemies[:n, :2] = pos[order]
             enemies[:n, 2] = 1.0
             extras["enemies"] = enemies
+        if "enemy_grid" in optional_keys:  # a swarm that grows with the stage clock
+            n = int(rng.integers(0, 20 + t))
+            extras["enemy_grid"] = encode_enemy_grid(rng.normal(0.0, 1.0, size=(n, 2)))
         return GameState(
             mode=mode,
             stage_time_s=t,

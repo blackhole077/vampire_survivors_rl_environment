@@ -224,3 +224,7 @@ providers/vs_memory/dumps/
 # (remove this line if you move it to a private repo or decide to publish it).
 # Its config.json names, per-build Mono layouts and item maps are game-derived and must never be committed.
 providers/vs_memory/
+
+# Local datasets (screenshots for the phase detector, 49 MB): kept out of git.
+# data/labels.csv was committed before this line and stays tracked.
+data/

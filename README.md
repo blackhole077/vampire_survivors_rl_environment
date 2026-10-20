@@ -43,7 +43,7 @@ A provider does one thing: it reads the game and fills in a `GameState`. That da
 | `xp_frac` | Progress from this level to the next, 0 to 1. |
 | `weapons`, `passives` | Owned items, in the game's order, as `ItemSlot(index, level)`. |
 | `offers` | The level-up choices on screen, as `ItemSlot(index, level if picked)`. Empty unless `mode` is `LEVELUP`. |
-| `extras` | Optional keys (`enemies`) and your own `x_` keys, already encoded. |
+| `extras` | Optional keys (`enemies`, `enemy_grid`) and your own `x_` keys, already encoded. |
 
 `index` is the item's position in `vocab.json`. Map the game's item IDs onto it with `load_vocab().index(key)`; anything you cannot map becomes `UNKNOWN`.
 

@@ -55,7 +55,7 @@ from typing import Callable, NamedTuple, Optional
 import gymnasium as gym
 import numpy as np
 
-SPEC_VERSION = "1.0"
+SPEC_VERSION = "1.1"
 
 FeatureFrame = dict[str, np.ndarray]
 
@@ -255,6 +255,40 @@ class GameState:
 N_ENEMY_SLOTS = 16
 ENEMY_POS_SCALE = 400.0  # world units; offsets are divided by this then clipped to [-1, 1]
 
+ENEMY_GRID_SIZE = 32  # cells per side
+ENEMY_GRID_EXTENT = 2.0  # the grid spans +-this many screen half-heights from the player
+ENEMY_GRID_CAP = 32  # a cell holding this many enemies or more reads 1.0
+
+
+def encode_enemy_grid(offsets: np.ndarray) -> np.ndarray:
+    """Count enemies into the player-centred `enemy_grid`.
+
+    offsets is (n, 2): each enemy's (dx, dy) from the player in screen
+    half-heights (the visible screen's height / 2), with y up, as the game
+    stores it.  Measuring in screen units keeps the grid independent of the
+    game's world units and resolution.
+
+    The grid is ENEMY_GRID_SIZE square cells spanning +-ENEMY_GRID_EXTENT
+    half-heights, so it covers the whole visible width (up to 2:1 screens)
+    and half a screen beyond the top and bottom edges, where enemies spawn.
+    Row 0 is the top and column 0 the left, as in the pixel frames.  Each
+    cell holds log1p(count) / log1p(ENEMY_GRID_CAP), clipped to 1: one enemy
+    reads about 0.2, and dense swarms stay distinguishable instead of all
+    reading 1.  Enemies outside the grid are dropped.
+    """
+    grid = np.zeros((ENEMY_GRID_SIZE, ENEMY_GRID_SIZE), dtype=np.float32)
+    offsets = np.asarray(offsets, dtype=np.float64).reshape(-1, 2)
+    if len(offsets) == 0:
+        return grid
+    scale = ENEMY_GRID_SIZE / (2 * ENEMY_GRID_EXTENT)
+    cols = np.floor((offsets[:, 0] + ENEMY_GRID_EXTENT) * scale)
+    rows = np.floor((ENEMY_GRID_EXTENT - offsets[:, 1]) * scale)
+    inside = (cols >= 0) & (cols < ENEMY_GRID_SIZE) & (rows >= 0) & (rows < ENEMY_GRID_SIZE)
+    counts = np.zeros_like(grid)
+    np.add.at(counts, (rows[inside].astype(np.intp), cols[inside].astype(np.intp)), 1.0)
+    np.minimum(np.log1p(counts) / np.log1p(ENEMY_GRID_CAP), 1.0, out=grid)
+    return grid
+
 # Registered optional keys.  A provider that emits one of these must use
 # exactly this space.  Add new entries with a MINOR bump.
 OPTIONAL_KEYS: dict[str, Callable[[], gym.spaces.Space]] = {
@@ -265,6 +299,8 @@ OPTIONAL_KEYS: dict[str, Callable[[], gym.spaces.Space]] = {
         high=np.ones((N_ENEMY_SLOTS, 3), dtype=np.float32),
         dtype=np.float32,
     ),
+    # Since 1.1.  Enemy density around the player; see encode_enemy_grid.
+    "enemy_grid": lambda: gym.spaces.Box(0.0, 1.0, shape=(ENEMY_GRID_SIZE, ENEMY_GRID_SIZE), dtype=np.float32),
 }
 
 EXTENSION_PREFIX = "x_"
