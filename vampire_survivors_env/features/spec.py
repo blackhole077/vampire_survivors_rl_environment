@@ -1,44 +1,56 @@
-"""Game-state feature provider spec, version SPEC_VERSION.
+"""The game-state feature spec, version SPEC_VERSION.
 
-A feature provider is an optional, structured side-channel next to the pixel
-observations: game mode, a few normalised scalars, the current build, and the
-level-up offers.  The env never imports a concrete provider; it loads one from
-config (see loader.py) and checks it against this module.
+The env sees the game as pixels.  A feature provider adds what the pixels
+make hard to read: what the game is showing, the clock, health, level and
+experience, the items the character owns, and the choices on a level-up
+screen.  It is optional.  The env never imports a provider; it loads one by
+name (loader.py) and checks it against this module.
 
-Versioning
-  SPEC_VERSION is "MAJOR.MINOR".  A provider is compatible iff its MAJOR
-  matches.  MINOR bumps may only add: new Mode values (within MODE_CAPACITY),
-  new vocabulary entries (within VOCAB_CAPACITY), or new OPTIONAL_KEYS.  Space
-  sizes are fixed by the capacities, so none of these change a space's shape.
+Start with GameState.  A provider reads the game, fills in a GameState in
+the game's own units, and calls encode().  Everything below GameState in
+this file describes what encode() produces, so a provider that uses it never
+needs the details.
 
-Frame layout (a FeatureFrame is dict[str, np.ndarray] matching the space)
-  valid     Discrete(2)       1 on every frame a provider returns; the env
-                              substitutes null_frame() (valid=0) when read()
-                              returns None or fails.
-  mode      Discrete(16)      a Mode value; consumers treat values they do not
-                              know as Mode.OTHER.
-  scalars   Box(5,) float32   see SCALAR_NAMES / encode_scalars().
-  weapons   MultiDiscrete     (N_WEAPON_SLOTS, 2): (vocab index, level).
-  passives  MultiDiscrete     (N_PASSIVE_SLOTS, 2): same encoding.
-  offers    MultiDiscrete     (N_OFFER_SLOTS, 2): (vocab index, level the
-                              item would have after picking it, 1 = new).
-                              All slots EMPTY unless mode == LEVELUP.
-  Slot encoding: (EMPTY_INDEX, 0) for an empty slot; otherwise a vocab index
-  >= 1 and a level in 1..MAX_ITEM_LEVEL (higher levels are clipped).  Items
-  the provider cannot map use UNKNOWN_INDEX.  Slots are filled in game order
-  with empties last.
+The frame
+  Each read() returns a FeatureFrame: a dict of numpy arrays that matches
+  build_space().
+
+  valid     1 on every frame a provider returns.  The env uses 0 for the
+            null frame it substitutes when read() returns None or fails.
+  mode      A Mode value.  Code that meets a value it does not know should
+            treat it as Mode.OTHER.
+  scalars   Five floats: stage time, hp fraction, max hp, level, xp
+            fraction, each scaled to a small range (see encode_scalars).
+  weapons   One row per slot: (vocabulary index, level).
+  passives  The same, for passive items.
+  offers    The same, for level-up choices, where level is the level the
+            item would reach if picked (1 for a new item).  All empty
+            unless mode is LEVELUP.
+
+  An empty slot is (EMPTY_INDEX, 0), and empty slots come last.  An item the
+  provider cannot name is UNKNOWN_INDEX.  Levels above MAX_ITEM_LEVEL are
+  clipped.
 
 Optional keys
-  Anything outside CORE_KEYS must either be registered in OPTIONAL_KEYS (and
-  then match that space exactly) or start with "x_" (provider-specific).
-  Consumers detect optional keys with `key in provider_space.spaces`.
+  A provider may add keys beyond the core ones.  A key registered in
+  OPTIONAL_KEYS must use exactly that space; any other key must start with
+  "x_".  Consumers test for one with `key in space.spaces`.
 
-Writing game state is deliberately not part of this interface.
+Versions
+  SPEC_VERSION is "MAJOR.MINOR", and a provider works with this env when the
+  MAJOR numbers match.  A MINOR release may only add: Mode values, vocabulary
+  entries or registered optional keys.  The spaces are sized by fixed
+  capacities (MODE_CAPACITY, VOCAB_CAPACITY), so none of these change an
+  array's shape.
+
+The spec is read-only: nothing here writes to the game.
 """
 
 import abc
+from collections.abc import Mapping, Sequence
+from dataclasses import dataclass, field
 from enum import IntEnum
-from typing import Callable, Optional
+from typing import Callable, NamedTuple, Optional
 
 import gymnasium as gym
 import numpy as np
@@ -166,6 +178,79 @@ def core_space() -> gym.spaces.Dict:
 
 
 CORE_KEYS = frozenset(core_space().spaces)
+
+
+# ---------------------------------------------------------------------------
+# GameState: what a provider reads, before encoding
+# ---------------------------------------------------------------------------
+
+
+class ItemSlot(NamedTuple):
+    """One owned item, or one level-up offer.
+
+    index is the item's vocabulary index (see vocab.py).  The provider maps the
+    game's own item IDs onto it; an item it cannot map is UNKNOWN_INDEX.  level
+    is the item's level now, or for an offer the level it would reach if
+    picked (1 for an item not yet owned).
+    """
+
+    index: int
+    level: int
+
+
+@dataclass(frozen=True)
+class GameState:
+    """One reading of the game, in the game's own units.
+
+    This is the contract between a provider and the spec.  A provider's job is
+    to fill in these fields from wherever it gets them (process memory, a mod,
+    a recording); encode() turns them into the FeatureFrame the policy sees,
+    doing all the scaling, clipping and slot packing in one place.  A provider
+    that builds its frames this way cannot get the layout wrong.
+
+    Read it only while a run is on screen.  Between runs, in menus or while a
+    stage loads, read() returns None and the env fills in null_frame().
+
+    mode            What the game is showing (Mode).
+    stage_time_s    The stage clock in seconds, as shown at the top of the
+                    screen.  A stage normally ends at 1800 (30:00).
+    hp, max_hp      Health now and its current maximum, in game HP.
+    level           The character's level, starting at 1.
+    xp_frac         Progress from this level to the next, 0 to 1.
+    weapons         Owned weapons in the order the game lists them.
+    passives        Owned passive items, likewise.
+    offers          The level-up choices on screen.  Empty unless mode is
+                    LEVELUP.
+    extras          Registered optional keys (OPTIONAL_KEYS) and the
+                    provider's own "x_" keys, already encoded to their spaces.
+
+    Slot lists may be longer than the space allows; encode() keeps the first
+    N_WEAPON_SLOTS, N_PASSIVE_SLOTS or N_OFFER_SLOTS.
+    """
+
+    mode: Mode
+    stage_time_s: float
+    hp: float
+    max_hp: float
+    level: int
+    xp_frac: float
+    weapons: Sequence[ItemSlot] = ()
+    passives: Sequence[ItemSlot] = ()
+    offers: Sequence[ItemSlot] = ()
+    extras: Mapping[str, np.ndarray] = field(default_factory=dict)
+
+    def encode(self) -> FeatureFrame:
+        """The FeatureFrame for this reading.  Check it with frame_problems() if in doubt."""
+        frame: FeatureFrame = {
+            "valid": np.int64(1),
+            "mode": np.int64(self.mode),
+            "scalars": encode_scalars(self.stage_time_s, self.hp, self.max_hp, int(self.level), self.xp_frac),
+            "weapons": encode_slots(list(self.weapons), N_WEAPON_SLOTS),
+            "passives": encode_slots(list(self.passives), N_PASSIVE_SLOTS),
+            "offers": encode_slots(list(self.offers), N_OFFER_SLOTS),
+        }
+        frame.update(self.extras)
+        return frame
 
 N_ENEMY_SLOTS = 16
 ENEMY_POS_SCALE = 400.0  # world units; offsets are divided by this then clipped to [-1, 1]

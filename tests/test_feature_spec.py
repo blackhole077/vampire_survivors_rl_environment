@@ -17,7 +17,9 @@ from vampire_survivors_env.features.spec import (
     MAX_ITEM_LEVEL,
     SPEC_VERSION,
     FeatureProvider,
+    GameState,
     IncompatibleProviderError,
+    ItemSlot,
     Mode,
     build_space,
     check_compatible,
@@ -215,3 +217,24 @@ def test_mock_replays_none_and_raise_steps():
         p.read()
     assert int(p.read()["valid"]) == 1
     assert p.read() is None  # exhausted, loop=False
+
+
+def test_game_state_encodes_to_a_conforming_frame():
+    vocab = load_vocab()
+    whip, spinach = vocab.index("WHIP"), vocab.index("SPINACH")
+    state = GameState(
+        mode=Mode.LEVELUP, stage_time_s=900.0, hp=50.0, max_hp=200.0, level=12, xp_frac=0.25,
+        weapons=[ItemSlot(whip, 3)], passives=[ItemSlot(spinach, 1)],
+        offers=[ItemSlot(whip, 4), ItemSlot(spinach, 2), ItemSlot(vocab.index("NOT_AN_ITEM"), 1)],
+    )
+    frame = state.encode()
+    assert frame_problems(frame, build_space()) == []
+    np.testing.assert_allclose(frame["scalars"], encode_scalars(900.0, 50.0, 200.0, 12, 0.25))
+    assert frame["offers"].tolist() == [[whip, 4], [spinach, 2], [1, 1], [0, 0]]  # unmapped -> UNKNOWN
+
+
+def test_game_state_carries_optional_keys():
+    space = build_space(("enemies",))
+    enemies = np.zeros(space["enemies"].shape, dtype=np.float32)
+    frame = GameState(Mode.PLAYING, 0.0, 100.0, 100.0, 1, 0.0, extras={"enemies": enemies}).encode()
+    assert frame_problems(frame, space) == []

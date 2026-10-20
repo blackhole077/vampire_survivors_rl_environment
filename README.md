@@ -32,7 +32,39 @@ info["features_ok"], info["features_read_ms"], info.get("features_error")
 
 ### Writing a provider
 
-Subclass `vampire_survivors_env.features.FeatureProvider` (or duck-type it). Return `build_space(optional_keys)` from `observation_space()`, and build frames with `encode_scalars` / `encode_slots`. To check an implementation:
+A provider does one thing: it reads the game and fills in a `GameState`. That dataclass, in `spec.py`, is the interface. It holds the values in the game's own units, and its `encode()` method does all the scaling, clipping and slot packing. A provider that builds frames this way cannot get the layout wrong.
+
+| Field | What it holds |
+|---|---|
+| `mode` | What the game is showing: a `Mode` (`PLAYING`, `LEVELUP`, `CHEST`, `GAMEOVER`, `RESULTS`, `OTHER`). |
+| `stage_time_s` | The stage clock in seconds. A stage normally ends at 1800 (30:00). |
+| `hp`, `max_hp` | Health now and its current maximum, in game HP. |
+| `level` | The character's level, starting at 1. |
+| `xp_frac` | Progress from this level to the next, 0 to 1. |
+| `weapons`, `passives` | Owned items, in the game's order, as `ItemSlot(index, level)`. |
+| `offers` | The level-up choices on screen, as `ItemSlot(index, level if picked)`. Empty unless `mode` is `LEVELUP`. |
+| `extras` | Optional keys (`enemies`) and your own `x_` keys, already encoded. |
+
+`index` is the item's position in `vocab.json`. Map the game's item IDs onto it with `load_vocab().index(key)`; anything you cannot map becomes `UNKNOWN`.
+
+```python
+from vampire_survivors_env.features import FeatureProvider, GameState, ItemSlot, Mode, build_space
+
+class MyProvider(FeatureProvider):
+    def observation_space(self):
+        return build_space()
+
+    def read(self):
+        if not self.game_is_in_a_run():
+            return None                      # the env substitutes the null frame
+        return GameState(
+            mode=Mode.PLAYING, stage_time_s=self.clock(), hp=self.hp(), max_hp=self.max_hp(),
+            level=self.level(), xp_frac=self.xp_frac(),
+            weapons=[ItemSlot(index, level) for index, level in self.weapons()],
+        ).encode()
+```
+
+Return `None` outside a run (menus, loading screens): the env fills in the null frame. To check a provider against the spec:
 
 ```bash
 pytest tests/conformance --provider "my_package.my_module:MyProvider" \

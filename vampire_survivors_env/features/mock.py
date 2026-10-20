@@ -19,15 +19,13 @@ import numpy as np
 from vampire_survivors_env.features.spec import (
     N_ENEMY_SLOTS,
     N_OFFER_SLOTS,
-    N_PASSIVE_SLOTS,
-    N_WEAPON_SLOTS,
     SPEC_VERSION,
     FeatureFrame,
     FeatureProvider,
+    GameState,
+    ItemSlot,
     Mode,
     build_space,
-    encode_scalars,
-    encode_slots,
 )
 from vampire_survivors_env.features.vocab import load_vocab
 
@@ -105,14 +103,7 @@ def synthetic_trace(
     t, hp, max_hp, level, xp = 0.0, 100.0, 100.0, 1, 0.0
 
     def frame(mode: Mode, offers: list[tuple[int, int]] = ()) -> dict[str, Any]:
-        f = {
-            "valid": 1,
-            "mode": int(mode),
-            "scalars": encode_scalars(t, hp, max_hp, level, xp),
-            "weapons": encode_slots([tuple(w) for w in weapons], N_WEAPON_SLOTS),
-            "passives": encode_slots([tuple(p) for p in passives], N_PASSIVE_SLOTS),
-            "offers": encode_slots(list(offers), N_OFFER_SLOTS),
-        }
+        extras = {}
         if "enemies" in optional_keys:
             n = int(rng.integers(0, N_ENEMY_SLOTS + 1))
             enemies = np.zeros((N_ENEMY_SLOTS, 3), dtype=np.float32)
@@ -120,8 +111,19 @@ def synthetic_trace(
             order = np.argsort(np.linalg.norm(pos, axis=1))
             enemies[:n, :2] = pos[order]
             enemies[:n, 2] = 1.0
-            f["enemies"] = enemies
-        return f
+            extras["enemies"] = enemies
+        return GameState(
+            mode=mode,
+            stage_time_s=t,
+            hp=hp,
+            max_hp=max_hp,
+            level=level,
+            xp_frac=xp,
+            weapons=[ItemSlot(*w) for w in weapons],
+            passives=[ItemSlot(*p) for p in passives],
+            offers=[ItemSlot(*o) for o in offers],
+            extras=extras,
+        ).encode()
 
     def make_offers() -> list[tuple[int, int]]:
         offers = []
