@@ -253,7 +253,11 @@ class GameState:
         return frame
 
 N_ENEMY_SLOTS = 16
-ENEMY_POS_SCALE = 400.0  # world units; offsets are divided by this then clipped to [-1, 1]
+# Screen half-heights, as in encode_enemy_grid: offsets are divided by this then clipped
+# to [-1, 1], so the enemies key reaches as far as the grid does.  (Was 400 "world units",
+# which assumed pixel-like units; the game's world units are far smaller.  Changed before
+# any provider emitted the key.)
+ENEMY_POS_SCALE = 2.0
 
 ENEMY_GRID_SIZE = 32  # cells per side
 ENEMY_GRID_EXTENT = 2.0  # the grid spans +-this many screen half-heights from the player
@@ -293,7 +297,8 @@ def encode_enemy_grid(offsets: np.ndarray) -> np.ndarray:
 # exactly this space.  Add new entries with a MINOR bump.
 OPTIONAL_KEYS: dict[str, Callable[[], gym.spaces.Space]] = {
     # Nearest enemies first: (dx, dy, present).  dx/dy are offsets from the
-    # player / ENEMY_POS_SCALE, clipped to [-1, 1]; unused rows are all zero.
+    # player in screen half-heights (y up, as for enemy_grid) / ENEMY_POS_SCALE,
+    # clipped to [-1, 1]; unused rows are all zero.
     "enemies": lambda: gym.spaces.Box(
         low=np.tile(np.array([-1.0, -1.0, 0.0], dtype=np.float32), (N_ENEMY_SLOTS, 1)),
         high=np.ones((N_ENEMY_SLOTS, 3), dtype=np.float32),

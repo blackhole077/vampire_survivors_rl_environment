@@ -60,6 +60,7 @@ class VampireSurvivorsEnv(gym.Env):
         game_fps: float = 60.0,
         feature_provider: Union[None, str, object] = None,
         feature_provider_kwargs: Optional[dict[str, Any]] = None,
+        pixel_episodes: bool = True,
     ) -> None:
         """Set up observation/action spaces and connect to the game window.
 
@@ -79,6 +80,10 @@ class VampireSurvivorsEnv(gym.Env):
         with feature_provider_kwargs.  When set, observations gain a "features"
         key and info gains features_ok / features_read_ms / features_error.
         When None (the default) observations and info are pixel-only, as before.
+        pixel_episodes=False is for a wrapper that ends episodes itself (e.g.
+        from game memory): step() then always sends the action and never
+        terminates or OCRs a reward from the pixel phase, which can misfire;
+        the phase is still reported in info["phase"].
         """
         super().__init__()
         self.render_mode = render_mode
@@ -87,6 +92,7 @@ class VampireSurvivorsEnv(gym.Env):
         self.action_repeat = action_repeat
         self.reward_scale = reward_scale
         self.game_fps = game_fps
+        self.pixel_episodes = pixel_episodes
         self.late_steps: int = 0
         self._step_due: Optional[float] = None  # monotonic time the current step ends
 
@@ -177,7 +183,13 @@ class VampireSurvivorsEnv(gym.Env):
         on the first results frame; the terminal reward is the survival time in
         seconds (OCR'd once and cached so repeated results frames don't re-run
         Tesseract).  Returns (obs, reward, terminated, truncated, info).
+        With pixel_episodes=False the action is always sent and the reward is 0.
         """
+        if not self.pixel_episodes:
+            self._send_movement_action(action)
+            self._wait_for_step_end()
+            return self._get_obs(), 0.0, False, False, self._get_info()
+
         if self._phase == "gameover":
             # Release all held keys; do not press anything during the death animation.
             self._send_movement_action(0)  # action 0 = frozenset() = no keys
@@ -230,7 +242,14 @@ class VampireSurvivorsEnv(gym.Env):
         return self._latest_frame
 
     def close(self) -> None:
-        """Release the screen-capture handle, any open input devices, and the feature provider."""
+        """Release held keys, the screen-capture handle, and the feature provider.
+
+        A key left held through XTEST stays down after the env is gone and
+        auto-repeats into whatever window has focus."""
+        try:
+            self._send_movement_action(0)
+        except Exception:
+            pass
         self._sct.close()
         if self._provider is not None:
             try:
