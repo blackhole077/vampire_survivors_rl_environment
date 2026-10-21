@@ -1,5 +1,6 @@
 """Optional game-state feature channel.  See spec.py for the contract."""
 
+from vampire_survivors_env.features.evolutions import Recipe, Recipes, load_recipes
 from vampire_survivors_env.features.spec import (
     SPEC_VERSION,
     FeatureFrame,
@@ -27,6 +28,8 @@ __all__ = [
     "IncompatibleProviderError",
     "ItemSlot",
     "Mode",
+    "Recipe",
+    "Recipes",
     "Vocab",
     "build_space",
     "check_compatible",
@@ -35,6 +38,7 @@ __all__ = [
     "encode_scalars",
     "encode_slots",
     "frame_problems",
+    "load_recipes",
     "load_vocab",
     "null_frame",
 ]
